@@ -1,19 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class WayPoints_script : MonoBehaviour
 {
+    public static Transform[] points;
 
-	// Use this for initialization
-	void Start ()
+	void Awake()
     {
-		
-	}
-	
-	// Update is called once per frame
-	void Update ()
-    {
-		
-	}
+        points = new Transform[this.transform.childCount];
+        for(int i = 0; i < points.Length; i++)
+        {
+            points[i] = this.transform.GetChild(i);
+        }
+    }
 }
