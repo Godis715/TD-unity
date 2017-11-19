@@ -1,15 +1,16 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Waypoits : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public static Transform[] points;
+
+    void Awake ()
+    {
+        points = new Transform[transform.childCount];
+        for (int i = 0; i < points.Length; i++)
+        {
+            points[i] = transform.GetChild(i);
+        }
+
+    }
 }
