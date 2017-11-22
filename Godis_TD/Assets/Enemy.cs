@@ -2,7 +2,7 @@
 
 public class Enemy : MonoBehaviour {
 
-    public float speed = 10f;
+    public float speed = 20f;
 
     private Transform target;
     private int wavepointIndex = 0;
