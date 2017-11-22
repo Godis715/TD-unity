@@ -19,6 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4068060350701326}
+  - component: {fileID: 114684185829159070}
   m_Layer: 0
   m_Name: Turret
   m_TagString: Untagged
@@ -186,3 +187,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1387350888643780}
   m_Mesh: {fileID: 4300000, guid: cc9e6095dd263db43b3823677f3d259b, type: 3}
+--- !u!114 &114684185829159070
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1030824633762224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb80610b208747943b5fb7185ff9cc92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 0}
+  Range: 12
+  EnemyTag: Enemy
+  PartToRotation: {fileID: 0}
