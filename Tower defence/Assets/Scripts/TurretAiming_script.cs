@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class TurretAiming_script : MonoBehaviour
 {
@@ -40,9 +39,10 @@ public class TurretAiming_script : MonoBehaviour
 		float minimalDistacne = Mathf.Infinity;
 		foreach(GameObject currentEnemy in allEnemies)
 		{
-			if(Vector3.Distance(this.transform.position, currentEnemy.transform.position) < minimalDistacne)
+			Vector3 curDist = this.transform.position - currentEnemy.transform.position;
+			if (curDist.magnitude < minimalDistacne)
 			{
-				minimalDistacne = Vector3.Distance(this.transform.position, currentEnemy.transform.position);
+				minimalDistacne = curDist.magnitude;
 				nearestEnemy = currentEnemy;
 			}
 		}
