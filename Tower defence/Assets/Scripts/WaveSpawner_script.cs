@@ -1,12 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class WaveSpawner_script : MonoBehaviour
 {
     [Header("Spawning")]
-    public float timeBetweenWaves = 5.0f;
+    public float timeBetweenWaves = 5.5f;
     public GameObject enemyPrefab;
     public Transform spawnPoint;
+
+	[Header("Displaying")]
+	public Text countDownTimerDisplay;
 
     private float countdownToWave = 5.0f;
     private int waveIndex = 0;
@@ -14,6 +18,8 @@ public class WaveSpawner_script : MonoBehaviour
     void Update()
     {
         countdownToWave -= Time.deltaTime;
+		countDownTimerDisplay.text = Mathf.Round(countdownToWave).ToString();
+
         if(countdownToWave <= 0f)
         {
             waveIndex++;
