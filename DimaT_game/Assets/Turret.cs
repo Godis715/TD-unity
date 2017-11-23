@@ -3,7 +3,8 @@ using System.Collections;
 
 public class Turret : MonoBehaviour {
 	public Transform target;
-	public float range = 10f;
+	public static float range1 = 10f;
+	public float range = range1;
 	public string tagEnemy = "Enemy";
 	public Transform PartToRotate;
 	public float turnSpeed = 10f;
@@ -46,7 +47,15 @@ public class Turret : MonoBehaviour {
 
 	void InDrawGizmosSelected()
 	{
-		Gizmos.color = Color.blue;
+		Gizmos.color = Color.red;
 		Gizmos.DrawWireSphere(transform.position, range);
 	}
+	/*
+	void OnDrawGizmosSelected()
+	{
+		Gizmos.color = Color.red;
+		Vector3 direction = transform.TransformDirection(Vector3.forward) * 5;
+		Gizmos.DrawRay(transform.position, direction);
+	}
+	*/
 }
