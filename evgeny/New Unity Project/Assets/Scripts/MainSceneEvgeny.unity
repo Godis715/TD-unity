@@ -4650,7 +4650,7 @@ MonoBehaviour:
   Target: {fileID: 0}
   Range: 12
   EnemyTag: Enemy
-  PartToRotation: {fileID: 0}
+  PartToRotation: {fileID: 774609219}
 --- !u!1001 &1246124515
 Prefab:
   m_ObjectHideFlags: 0
@@ -6052,7 +6052,7 @@ MonoBehaviour:
   Target: {fileID: 0}
   Range: 12
   EnemyTag: Enemy
-  PartToRotation: {fileID: 0}
+  PartToRotation: {fileID: 1545260889}
 --- !u!4 &1553342408
 Transform:
   m_ObjectHideFlags: 0
@@ -8882,7 +8882,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2109842862}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 48, y: 298.5, z: 0}
+  m_LocalPosition: {x: 324.5, y: 298.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1910354377}
