@@ -7,6 +7,7 @@ TagManager:
   - Enemy
   - Node
   - Turret
+  - SpeedUp
   layers:
   - Default
   - TransparentFX

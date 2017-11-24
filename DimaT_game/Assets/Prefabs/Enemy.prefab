@@ -96,9 +96,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 15
-  health: 100
+  TagSpeedUp: SpeedUp
   barrier: {fileID: 4428498435427570, guid: cee4f836fb7c74c46b146d607a734334, type: 2}
+  health: 100
   TagTurret: Turret
+  damage: 5
   Blood: {fileID: 1859175268069210, guid: e694b221b128bd741ab8b43a7658cf57, type: 2}
 --- !u!135 &135609955552284580
 SphereCollider:

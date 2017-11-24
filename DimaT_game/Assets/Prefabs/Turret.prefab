@@ -232,3 +232,4 @@ MonoBehaviour:
   tagEnemy: Enemy
   PartToRotate: {fileID: 4400419333576818}
   turnSpeed: 10
+  effect: {fileID: 1881675300772740, guid: a21c0753ff5f2744ca74c50a06440dc7, type: 2}

@@ -51,11 +51,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Enemy.cs" />
-     <Compile Include="Assets\Node.cs" />
-     <Compile Include="Assets\Turret.cs" />
-     <Compile Include="Assets\WaveSpawner.cs" />
-     <Compile Include="Assets\Waypoits.cs" />
+     <Compile Include="Assets\Scripts\Enemy.cs" />
+     <Compile Include="Assets\Scripts\Node.cs" />
+     <Compile Include="Assets\Scripts\shot.cs" />
+     <Compile Include="Assets\Scripts\Turret.cs" />
+     <Compile Include="Assets\Scripts\WaveSpawner.cs" />
+     <Compile Include="Assets\Scripts\Waypoits.cs" />
+     <None Include="Assets\Standard Assets\ParticleSystems\ParticleSystemsGuidelines.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
