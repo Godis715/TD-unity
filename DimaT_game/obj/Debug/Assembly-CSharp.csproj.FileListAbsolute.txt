@@ -37,3 +37,4 @@ C:\Proga\Litvinov\GitHub\TD-unity\DimaT_game\obj\Debug\Assembly-CSharp.csprojRes
 C:\Proga\Litvinov\GitHub\TD-unity\DimaT_game\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
 C:\Proga\Litvinov\GitHub\TD-unity\DimaT_game\obj\Debug\Assembly-CSharp.dll
 C:\Proga\Litvinov\GitHub\TD-unity\DimaT_game\obj\Debug\Assembly-CSharp.pdb
+C:\Proga\Litvinov\GitHub\TD-unity\DimaT_game\Temp\bin\Debug\Assembly-CSharp-firstpass.pdb

@@ -1,7 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DimaT_game", "Assembly-CSharp-firstpass.csproj", "{3B771DFD-6A5C-1042-1F81-CFF8CD4B6A6D}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DimaT_game", "Assembly-CSharp.csproj", "{EE6369E4-113D-5C72-B505-494EBC1B541E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DimaT_game", "Assembly-CSharp-Editor-firstpass.csproj", "{5605A0C0-B3B0-05D3-D4E3-93FEA6FEF828}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +13,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3B771DFD-6A5C-1042-1F81-CFF8CD4B6A6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B771DFD-6A5C-1042-1F81-CFF8CD4B6A6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B771DFD-6A5C-1042-1F81-CFF8CD4B6A6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B771DFD-6A5C-1042-1F81-CFF8CD4B6A6D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EE6369E4-113D-5C72-B505-494EBC1B541E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EE6369E4-113D-5C72-B505-494EBC1B541E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE6369E4-113D-5C72-B505-494EBC1B541E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE6369E4-113D-5C72-B505-494EBC1B541E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5605A0C0-B3B0-05D3-D4E3-93FEA6FEF828}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5605A0C0-B3B0-05D3-D4E3-93FEA6FEF828}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5605A0C0-B3B0-05D3-D4E3-93FEA6FEF828}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5605A0C0-B3B0-05D3-D4E3-93FEA6FEF828}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

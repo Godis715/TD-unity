@@ -2,40 +2,104 @@
 using UnityEngine;
 
 public class Node : MonoBehaviour {
-	public Transform turructPrefab;
-	private int index = 0;
+	public Transform turretPrefab;
+	public GameObject Glow;
+	public string TagGlow = "Glow";
+	public string TagTurret = "Turret";
+	private int NewIndex = 0;
+	private int OldIndex = 0;
+	public int width = 16;
 	void Update () {
-		if (Input.GetKeyDown(KeyCode.LeftArrow) && index - 1 >= 0)
+		if (Input.GetKeyDown(KeyCode.LeftArrow) && NewIndex - 1 >= 0)
 		{
-			index--;
-			transform.GetChild(index).GetComponent<Renderer>().material.color = Color.red;
-			transform.GetChild(index + 1).GetComponent<Renderer>().material.color = Color.white;
-		}
-		if (Input.GetKeyDown(KeyCode.RightArrow) && index != transform.childCount)
-		{
-			index++;
-			transform.GetChild(index).GetComponent<Renderer>().material.color = Color.red;
-			if (index != 0)
+			OldIndex = NewIndex;
+			do
 			{
-				transform.GetChild(index - 1).GetComponent<Renderer>().material.color = Color.white;
-			}
+				NewIndex--;
+				if (OldIndex < 0)
+				{
+					NewIndex = OldIndex;
+					break;
+				}
+			} while (!CheckNode(transform.GetChild(NewIndex)) || (transform.GetChild(NewIndex).GetComponent<Renderer>().material.color == Color.yellow));
+			Backlight();
 		}
-		/*
-		if (Input.GetKeyDown(KeyCode.DownArrow) && index + 15 <= transform.childCount)
+		if (Input.GetKeyDown(KeyCode.RightArrow) && NewIndex + 1 != transform.childCount)
 		{
-			index += 16;
-			transform.GetChild(index).GetComponent<Renderer>().material.color = Color.red;
-			if (index != 0)
+			OldIndex = NewIndex;
+			do
 			{
-				transform.GetChild(index - 16).GetComponent<Renderer>().material.color = Color.white;
-			}
+				NewIndex++;
+				if (OldIndex == transform.childCount)
+				{
+					NewIndex = OldIndex;
+					break;
+				}
+			} while (!CheckNode(transform.GetChild(NewIndex)) || (transform.GetChild(NewIndex).GetComponent<Renderer>().material.color == Color.yellow));
+			Backlight();
 		}
-		*/
+		if (Input.GetKeyDown(KeyCode.DownArrow) && NewIndex + width < transform.childCount)
+		{
+			OldIndex = NewIndex;
+			do
+			{
+				NewIndex += width;
+				if (OldIndex >= transform.childCount)
+				{
+					NewIndex = OldIndex;
+					break;
+				}
+			} while (!CheckNode(transform.GetChild(NewIndex)) || (transform.GetChild(NewIndex).GetComponent<Renderer>().material.color == Color.yellow));
+			Backlight();
+		}
+		if (Input.GetKeyDown(KeyCode.UpArrow) && NewIndex - width > 0)
+		{
+			OldIndex = NewIndex;
+			do
+			{
+				NewIndex -= width;
+				if (OldIndex < 0)
+				{
+					NewIndex = OldIndex;
+					break;
+				}
+			} while (!CheckNode(transform.GetChild(NewIndex)) || (transform.GetChild(NewIndex).GetComponent<Renderer>().material.color == Color.yellow));
+			Backlight();
+		}
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
-			transform.GetChild(index).GetComponent<Renderer>().material.color = Color.white;
-			Vector3 putTurrect = new Vector3(transform.GetChild(index).position.x, transform.GetChild(index).position.y + 1.0f, transform.GetChild(index).position.z);
-			Instantiate(turructPrefab, putTurrect, turructPrefab.GetChild(0).rotation);
+			transform.GetChild(NewIndex).GetComponent<Renderer>().material.color = Color.yellow;
+			Vector3 positionNode = new Vector3(transform.GetChild(NewIndex).position.x, transform.GetChild(NewIndex).position.y + 1.0f, transform.GetChild(NewIndex).position.z);
+			Instantiate(turretPrefab, positionNode, turretPrefab.GetChild(0).rotation);
+			AddGlow();
 		}
+	}
+	bool CheckNode(Transform node)
+	{
+		if (node.position.y == 0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	void Backlight ()
+	{
+		if (transform.GetChild(NewIndex).GetComponent<Renderer>().material.color != Color.yellow)
+		{
+			transform.GetChild(NewIndex).GetComponent<Renderer>().material.color = Color.red;
+
+		}
+		if (transform.GetChild(OldIndex).GetComponent<Renderer>().material.color != Color.yellow)
+		{
+			transform.GetChild(OldIndex).GetComponent<Renderer>().material.color = Color.white;
+		}
+	}
+	void AddGlow()
+	{
+		Quaternion CreateAngle = Quaternion.Euler(transform.GetChild(NewIndex).rotation.x - 90f, transform.GetChild(NewIndex).rotation.y, transform.GetChild(NewIndex).rotation.z);
+		Instantiate(Glow, transform.GetChild(NewIndex).position, CreateAngle);
 	}
 }
