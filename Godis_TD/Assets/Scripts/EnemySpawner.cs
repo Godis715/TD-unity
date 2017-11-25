@@ -8,8 +8,8 @@ public class EnemySpawner : MonoBehaviour {
 
 	public Transform spawnPoint;
 
-	public float timeBetweenWaves = 3f;
-	private float countdown = 2f;
+	public float timeBetweenWaves = 10f;
+	private float countdown = 0f;
 
 	private int waveNumber = 0;
 

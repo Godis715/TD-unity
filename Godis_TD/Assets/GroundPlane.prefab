@@ -9,74 +9,45 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1717947662627426}
+  m_RootGameObject: {fileID: 1157553929295836}
   m_IsPrefabParent: 1
---- !u!1 &1030784426062432
+--- !u!1 &1157553929295836
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4873226407658516}
-  - component: {fileID: 33002382163271854}
-  - component: {fileID: 65700350037596386}
-  - component: {fileID: 23713732309813914}
+  - component: {fileID: 4887154436100646}
+  - component: {fileID: 33552265951507492}
+  - component: {fileID: 65308601412543180}
+  - component: {fileID: 23324734073409132}
   m_Layer: 0
-  m_Name: freezerView
+  m_Name: GroundPlane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1717947662627426
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 4310845742720002}
-  m_Layer: 0
-  m_Name: Freezer
-  m_TagString: Untagged
-  m_Icon: {fileID: 7707008975528953803, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
---- !u!4 &4310845742720002
+--- !u!4 &4887154436100646
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1717947662627426}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -18, y: 0, z: 40}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 4873226407658516}
+  m_GameObject: {fileID: 1157553929295836}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -2, z: 0}
+  m_LocalScale: {x: 1000, y: 0.5, z: 1000}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4873226407658516
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1030784426062432}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.20000076, y: -1.8, z: 0.099998474}
-  m_LocalScale: {x: 3.5, y: 1, z: 3.5}
-  m_Children: []
-  m_Father: {fileID: 4310845742720002}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &23713732309813914
+--- !u!23 &23324734073409132
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1030784426062432}
+  m_GameObject: {fileID: 1157553929295836}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -85,7 +56,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 3ebeea4fc538d1f4a99d25dc40e2e9f8, type: 2}
+  - {fileID: 2100000, guid: 5d4c3582bfb38054ea3014b1685a0a53, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -105,19 +76,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!33 &33002382163271854
+--- !u!33 &33552265951507492
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1030784426062432}
+  m_GameObject: {fileID: 1157553929295836}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!65 &65700350037596386
+--- !u!65 &65308601412543180
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1030784426062432}
+  m_GameObject: {fileID: 1157553929295836}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1

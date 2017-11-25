@@ -11,6 +11,8 @@ public class Turret : MonoBehaviour {
 
 	public Transform center;
 
+	public GameObject nearestEnemy = null;
+
 	void Start () {
 		InvokeRepeating("UpdateTarget", 0f, 0.5f);
 	}
@@ -19,7 +21,7 @@ public class Turret : MonoBehaviour {
 		GameObject[] enemies = GameObject.FindGameObjectsWithTag(enemyTag);
 
 		float shortestDistance = Mathf.Infinity;
-		GameObject nearestEnemy = null;
+		nearestEnemy = null;
 
 		foreach (GameObject enemy in enemies) {
 			float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
@@ -48,6 +50,18 @@ public class Turret : MonoBehaviour {
 		Quaternion lookRotation = Quaternion.LookRotation(dir);
 		Vector3 rotation = Quaternion.Lerp(center.rotation, lookRotation, Time.deltaTime * 8f).eulerAngles;
 		center.rotation = Quaternion.Euler(0f, rotation.y, 0f);
+
+		if (nearestEnemy != null) {
+			nearestEnemy.GetComponent<Enemy>().health -= 30f * Time.deltaTime;
+			if (nearestEnemy.GetComponent<Enemy>().health <= 0f)
+			{
+				Destroy(nearestEnemy);
+			}
+			else {
+				nearestEnemy.GetComponent<MeshRenderer>().material.color = Color.Lerp(nearestEnemy.GetComponent<MeshRenderer>().material.color,
+					Color.red, nearestEnemy.GetComponent<Enemy>().health / 100f * Time.deltaTime);
+			}
+		}
 
 	}
 
