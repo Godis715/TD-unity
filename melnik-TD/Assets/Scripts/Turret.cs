@@ -7,6 +7,7 @@ public class Turret : MonoBehaviour {
     public float range = 15f;
     public float fireRate = 1f;
     private float fireCountdown = 0f;
+    public float damage = 10f;
     [Header("Unity setup")]
     public float rotatingSpeed = 10f;
     public Transform rotatingPart;
@@ -42,6 +43,7 @@ public class Turret : MonoBehaviour {
             {
                 shortestDistance = distanceToEnemy;
                 nearestEnemy = enemy;
+                
             }
         }
 
@@ -55,9 +57,9 @@ public class Turret : MonoBehaviour {
         }
         else
         {
-
             target = null;
         }
+        
 
     }
 	
@@ -84,7 +86,7 @@ public class Turret : MonoBehaviour {
     {
         GameObject curBullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
         Bullet bullet = curBullet.GetComponent<Bullet>();
-
+        bullet.damage = damage;
         if (bullet != null)
         {
             bullet.Seek(target);

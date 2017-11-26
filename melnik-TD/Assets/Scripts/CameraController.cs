@@ -9,10 +9,10 @@ public class CameraController : MonoBehaviour {
     private bool doMovement = true;
     public float scrollSpeed = 30f;
     private float minY = 2.5f;
-    public float maxY = 90f;
+    private float maxY = 92.5f;
     private float minX = -45f;
     private float maxX = 45f;
-	void Update ()
+    void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -45,11 +45,11 @@ public class CameraController : MonoBehaviour {
         Vector3 pos = transform.position;
         Quaternion rot = transform.rotation;
         rot.x -= scroll * scrollSpeed * Time.deltaTime;
-        pos.y -= scroll * 90 * scrollSpeed * Time.deltaTime;// * (maxY-minY)/90;
+        pos.y -= scroll * 100f * scrollSpeed * Time.deltaTime;// * (maxY-minY)/90;
         pos.y = Mathf.Clamp(pos.y, minY, maxY);
-        rot.x = Mathf.Clamp(rot.x, minX, maxX);
-
+        rot.x = Mathf.Clamp(rot.x,0f,0.7073f);
+        
         transform.position = pos;
-        transform.rotation = Quaternion.Lerp(transform.rotation, rot ,Time.deltaTime*50f);
+        transform.rotation = rot;
     }
 }

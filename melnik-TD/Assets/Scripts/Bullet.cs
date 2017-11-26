@@ -6,6 +6,8 @@ public class Bullet : MonoBehaviour {
 
     private Transform target;
     public float speed = 70f;
+    public float damage;
+    public bool targetReached = false;
     public GameObject impactEffect;
     public void Seek(Transform _target)
     {
@@ -37,6 +39,9 @@ public class Bullet : MonoBehaviour {
     void HitTarget()
     {
         GameObject impEff =  Instantiate(impactEffect, transform.position, transform.rotation);
+        float curHealth = target.GetComponent<Enemy>().health;
+        curHealth -= damage;
+        target.GetComponent<Enemy>().health = curHealth;
         Destroy(impEff, 1f);
         Destroy(gameObject);
     }

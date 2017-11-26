@@ -3965,13 +3965,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 676365115}
-  m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 37.5, y: 41.25, z: 37.5}
-  m_LocalScale: {x: 0, y: 1, z: 1}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 37.5, y: 92.5, z: 37.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!114 &676365120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3985,8 +3985,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   panSpeed: 30
   panBorder: 10
-  scrollSpeed: 30
-  maxY: 80
+  scrollSpeed: 20
 --- !u!1 &677832650
 GameObject:
   m_ObjectHideFlags: 0
@@ -10025,8 +10024,9 @@ MonoBehaviour:
   enemyPreFub: {fileID: 4670070294975218, guid: 46ff0e58641a30645a2ccdc5fe9677e1,
     type: 2}
   spawnPoint: {fileID: 4091965395440350, guid: 122a09c5814464a43904e744bd0f3b09, type: 2}
-  timeBetweenWaves: 5.5
+  timeBetweenWaves: 2.5
   WaveCountdownText: {fileID: 1085523857}
+  dir: {x: 0, y: -1, z: 0}
 --- !u!4 &1756311400
 Transform:
   m_ObjectHideFlags: 0
@@ -10303,7 +10303,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1770301575}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 409.5, y: 346.5, z: 0}
+  m_LocalPosition: {x: 297, y: 346.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1085523856}

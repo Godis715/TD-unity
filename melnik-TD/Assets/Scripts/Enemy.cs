@@ -5,23 +5,40 @@ using UnityEngine;
 public class Enemy : MonoBehaviour {
 
     public float speed = 10f;
-
+    public float health = 100f;
     private Transform target;
+    private Color firstColor;
     private int wavepointIndex = 0;
-
+    public Explosion bloodPrefab;
+    private Vector3 startingForce;
     void Start ()
     {
         target = Waypoints.points[0];
+        firstColor = transform.GetComponent<Renderer>().material.color;
     }
 
     void Update ()
     {
         Vector3 dir = target.position - transform.position;
         transform.Translate(dir.normalized * speed * Time.deltaTime, Space.World);
-        if (Vector3.Distance(transform.position, target.position) < 0.3f)
+        startingForce = dir.normalized* speed * Time.deltaTime;
+        if (Vector3.Distance(transform.position, target.position) < 0.7f)
         {
             GetNextWaypoint();
         }
+        if (health <=0f)
+        {
+            EnemyDeath();
+        }
+        Color nextColor ;
+        nextColor = transform.GetComponent<Renderer>().material.color;
+        nextColor.r = firstColor.r + (255f - firstColor.r) * (1-Mathf.Cos((100f -health) / 100f));
+        nextColor.g = firstColor.g * Mathf.Cos((100f - health) / 100f);
+        nextColor.b = firstColor.b * Mathf.Cos((100f - health) / 100f);
+        Material nextMaterial = transform.GetComponent<Renderer>().material;
+        nextMaterial.color = nextColor;
+        transform.GetComponent<Renderer>().material.Lerp(transform.GetComponent<Renderer>().material, nextMaterial, Time.deltaTime*20f);
+
     }
 
     void GetNextWaypoint ()
@@ -33,5 +50,12 @@ public class Enemy : MonoBehaviour {
         }
         wavepointIndex++;
         target = Waypoints.points[wavepointIndex];
+    }
+
+    void EnemyDeath()
+    {
+        Destroy(gameObject);
+        Explosion blood = Instantiate(bloodPrefab, transform.position, transform.rotation);
+        blood.startForce = startingForce;
     }
 }

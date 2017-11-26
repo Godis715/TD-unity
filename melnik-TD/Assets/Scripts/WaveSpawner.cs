@@ -7,11 +7,11 @@ public class WaveSpawner : MonoBehaviour {
     public Transform enemyPreFub;
 
     public Transform spawnPoint;
-    public float timeBetweenWaves = 5f;
-    private float countdown = 5f;
+    public float timeBetweenWaves = 2f;
+    private float countdown = 2f;
 
     public Text WaveCountdownText;
-
+    public Vector3 dir = new Vector3(0f, -1f, 0f);
     private int waveIndex = 0;
 
     private void Update()
@@ -28,15 +28,17 @@ public class WaveSpawner : MonoBehaviour {
     IEnumerator spawnWave()
     {
         waveIndex++;
+        timeBetweenWaves += 0.5f;
         for (int i = 0; i < waveIndex; i++)
         {
             spawnEnemy();
             yield return new WaitForSeconds(0.5f);
         }
+
     }
 
     void spawnEnemy()
     {
-        Instantiate(enemyPreFub, spawnPoint.position, spawnPoint.rotation);
+        Instantiate(enemyPreFub, spawnPoint.position+dir, spawnPoint.rotation);
     }
 }
