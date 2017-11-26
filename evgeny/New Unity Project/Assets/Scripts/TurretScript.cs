@@ -40,16 +40,16 @@ public class TurretScript : MonoBehaviour
 			Target = FirstEnemy.transform;
 			if (FirstEnemy.GetComponent<Enemy>().speedOfEnemy > 9.0f)
 			{
-				FirstEnemy.GetComponent<Enemy>().speedOfEnemy = 9.0f;
+				// FirstEnemy.GetComponent<Enemy>().speedOfEnemy = 9.0f;
 			}
 		}
 		else
 		{
 			Target = null;
-			if (FirstEnemy.GetComponent<Enemy>().speedOfEnemy > 0.0f)
+			if (FirstEnemy.GetComponent<Enemy>().TimeOfFreez > 0.0f)
 			{
-				FirstEnemy.GetComponent<Enemy>().GetComponent<Renderer>().material.color = Old;
-				FirstEnemy.GetComponent<Enemy>().speedOfEnemy = 10.0f;
+				// FirstEnemy.GetComponent<Enemy>().GetComponent<Renderer>().material.color = Old;
+				// FirstEnemy.GetComponent<Enemy>().speedOfEnemy = 10.0f;
 			}
 		}
 	}
@@ -73,7 +73,7 @@ public class TurretScript : MonoBehaviour
 
 	void Shooting()
 	{
-		FirstEnemy.GetComponent<Enemy>().GetComponent<Renderer>().material.color = Color.red;
+		// FirstEnemy.GetComponent<Enemy>().GetComponent<Renderer>().material.color = Color.red;
 		FirstEnemy.GetComponent<Enemy>().HealthPoint -= 10;
 	}
 	void OnDrawGizmosSelected()

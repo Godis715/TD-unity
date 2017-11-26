@@ -39,16 +39,16 @@ public class MissileScript : MonoBehaviour
 			Target = FirstEnemy.transform;
 			if (FirstEnemy.GetComponent<Enemy>().speedOfEnemy > 8.0f)
 			{
-				FirstEnemy.GetComponent<Enemy>().speedOfEnemy = 8.0f;
+				// FirstEnemy.GetComponent<Enemy>().speedOfEnemy = 8.0f;
 			}
 		}
 		else
 		{
 			Target = null;
-			if (FirstEnemy.GetComponent<Enemy>().speedOfEnemy > 0.0f)
+			if (FirstEnemy.GetComponent<Enemy>().TimeOfFreez > 0.0f)
 			{
-				FirstEnemy.GetComponent<Enemy>().GetComponent<Renderer>().material.color = Old;
-				FirstEnemy.GetComponent<Enemy>().speedOfEnemy = 10.0f;
+				// FirstEnemy.GetComponent<Enemy>().GetComponent<Renderer>().material.color = Old;
+				// FirstEnemy.GetComponent<Enemy>().speedOfEnemy = 10.0f;
 			}
 		}
 	}
@@ -72,7 +72,7 @@ public class MissileScript : MonoBehaviour
 
 	void Shooting()
 	{
-		FirstEnemy.GetComponent<Enemy>().GetComponent<Renderer>().material.color = Color.red;
+		// FirstEnemy.GetComponent<Enemy>().GetComponent<Renderer>().material.color = Color.red;
 		FirstEnemy.GetComponent<Enemy>().HealthPoint -= 80;
 	}
 	void OnDrawGizmosSelected()

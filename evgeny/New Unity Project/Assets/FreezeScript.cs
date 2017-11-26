@@ -23,7 +23,7 @@ public class FreezeScript : MonoBehaviour
 			if (Range >= DistanceToEnemy)
 			{
 				// Enemies[i].GetComponent<Enemy>().speedOfEnemy = 0.0f;
-				Enemies[i].GetComponent<Enemy>().GetComponent<Renderer>().material.color = Color.white;
+				// Enemies[i].GetComponent<Enemy>().GetComponent<Renderer>().material.color = Color.white;
 				Enemies[i].GetComponent<Enemy>().TimeOfFreez = 2.0f;
 			}
 

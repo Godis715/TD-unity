@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
 	private Transform target;
 	private int wayPointIndex = 0;
 	public float TimeOfFreez;
+	private Color Old = Color.blue;
 
 	void Start()
 	{
@@ -17,18 +18,24 @@ public class Enemy : MonoBehaviour
 
 	void Update()
 	{
+		Old = Color.Lerp(Color.red, Color.blue, HealthPoint / 100f);
+		// this.GetComponent<Renderer>().material.color = Old;
+		this.GetComponent<Renderer>().material.color = Color.Lerp(Color.white, Old, speedOfEnemy / 10f);
+
 		// увеличиваем TimeOfFreez из скрипта Freeze, а потом уменьшаем его
 		if (TimeOfFreez > 0.0f)
 		{
 			if (speedOfEnemy > 0)
 			{
 				speedOfEnemy -= Time.deltaTime * 5;
+				// this.GetComponent<Renderer>().material.color = Color.Lerp(Color.white, Old, speedOfEnemy / 10f);
 			}
 			TimeOfFreez -= Time.deltaTime;
 			// как только TimeOfFreez станет <= 0, то скорость восстановится и в if больше не войдет
 			if (TimeOfFreez <= 0.0f)
 			{
 				speedOfEnemy = 10.0f;
+				// this.GetComponent<Renderer>().material.color = Old;
 			}
 		}
 
