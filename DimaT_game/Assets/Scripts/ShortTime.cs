@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class ShortTime : MonoBehaviour {
-	// Update is called once per frame
+	//Скрипт для удаления объекта через некоторое время
 	void Update () {
 		StartCoroutine(Delete());
 	}

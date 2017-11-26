@@ -22,6 +22,15 @@ public class WaveSpawner : MonoBehaviour {
 		}
 		countDown -= Time.deltaTime;
 		waveCountdownText.text = Mathf.Round(countDown).ToString();
+		//Проверка на Паузу
+		if (Time.timeScale == 0)
+		{
+			waveCountdownText.text = "Game Stop";
+		}
+		else
+		{
+			waveCountdownText.text = Mathf.Round(countDown).ToString();
+		}
 
 	}
 	IEnumerator SpawnWave()

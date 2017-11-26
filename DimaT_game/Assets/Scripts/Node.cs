@@ -3,16 +3,20 @@ using UnityEngine;
 
 public class Node : MonoBehaviour {
 	public Transform turretPrefab;
-	public GameObject Glow;
-	public string TagGlow = "Glow";
-	public string TagTurret = "Turret";
+
+	//Для хождения по полю
 	private int NewIndex = 0;
 	private int OldIndex = 0;
+	//Параметр поля (длина может быть любая)
 	public int width = 16;
+	//Звук покупки турели
+	public AudioClip buy;
 	void Update () {
+		//Влево
 		if (Input.GetKeyDown(KeyCode.LeftArrow) && NewIndex - 1 >= 0)
 		{
 			OldIndex = NewIndex;
+			//Обход дороги и турелей
 			do
 			{
 				NewIndex--;
@@ -22,8 +26,10 @@ public class Node : MonoBehaviour {
 					break;
 				}
 			} while (!CheckNode(transform.GetChild(NewIndex)) || (transform.GetChild(NewIndex).GetComponent<Renderer>().material.color == Color.yellow));
+			//Подсветка
 			Backlight();
 		}
+		//Вправо
 		if (Input.GetKeyDown(KeyCode.RightArrow) && NewIndex + 1 != transform.childCount)
 		{
 			OldIndex = NewIndex;
@@ -38,6 +44,7 @@ public class Node : MonoBehaviour {
 			} while (!CheckNode(transform.GetChild(NewIndex)) || (transform.GetChild(NewIndex).GetComponent<Renderer>().material.color == Color.yellow));
 			Backlight();
 		}
+		//Вниз
 		if (Input.GetKeyDown(KeyCode.DownArrow) && NewIndex + width < transform.childCount)
 		{
 			OldIndex = NewIndex;
@@ -52,6 +59,7 @@ public class Node : MonoBehaviour {
 			} while (!CheckNode(transform.GetChild(NewIndex)) || (transform.GetChild(NewIndex).GetComponent<Renderer>().material.color == Color.yellow));
 			Backlight();
 		}
+		//Вверх
 		if (Input.GetKeyDown(KeyCode.UpArrow) && NewIndex - width > 0)
 		{
 			OldIndex = NewIndex;
@@ -66,14 +74,26 @@ public class Node : MonoBehaviour {
 			} while (!CheckNode(transform.GetChild(NewIndex)) || (transform.GetChild(NewIndex).GetComponent<Renderer>().material.color == Color.yellow));
 			Backlight();
 		}
-		if (Input.GetKeyDown(KeyCode.Space))
+		//Установка турели
+		if (Input.GetKeyDown(KeyCode.Space) && transform.GetChild(NewIndex).GetComponent<Renderer>().material.color != Color.yellow) 
 		{
-			transform.GetChild(NewIndex).GetComponent<Renderer>().material.color = Color.yellow;
-			Vector3 positionNode = new Vector3(transform.GetChild(NewIndex).position.x, transform.GetChild(NewIndex).position.y + 1.0f, transform.GetChild(NewIndex).position.z);
-			Instantiate(turretPrefab, positionNode, turretPrefab.GetChild(0).rotation);
-			AddGlow();
+			//Проверка на наличие денег
+			if (Player.NewMoney != 0f)
+			{
+				//Звук покупки
+				AudioSource.PlayClipAtPoint(buy, transform.GetChild(NewIndex).position);
+				//Подсветка
+				transform.GetChild(NewIndex).GetComponent<Renderer>().material.color = Color.yellow;
+				//Увелечение координаты по Y, чтобы не поставить в текстутру node
+				Vector3 positionNode = new Vector3(transform.GetChild(NewIndex).position.x, transform.GetChild(NewIndex).position.y + 1.0f, transform.GetChild(NewIndex).position.z);
+				//Установка
+				Instantiate(turretPrefab, positionNode, turretPrefab.GetChild(0).rotation);
+				//Оплата
+				Player.NewMoney -= 10f;
+			}
 		}
 	}
+	//Проверка на наличие дороги
 	bool CheckNode(Transform node)
 	{
 		if (node.position.y == 0)
@@ -85,21 +105,20 @@ public class Node : MonoBehaviour {
 			return false;
 		}
 	}
+	//Подстветка
 	void Backlight ()
 	{
+		//Чтобы не закрасить в красный цвет node, где стоит турель
 		if (transform.GetChild(NewIndex).GetComponent<Renderer>().material.color != Color.yellow)
 		{
+			//окраска
 			transform.GetChild(NewIndex).GetComponent<Renderer>().material.color = Color.red;
-
 		}
+		//Чтобы не закрасить в белый цвет node,где поставили турель
 		if (transform.GetChild(OldIndex).GetComponent<Renderer>().material.color != Color.yellow)
 		{
+			//окраска
 			transform.GetChild(OldIndex).GetComponent<Renderer>().material.color = Color.white;
 		}
-	}
-	void AddGlow()
-	{
-		Quaternion CreateAngle = Quaternion.Euler(transform.GetChild(NewIndex).rotation.x - 90f, transform.GetChild(NewIndex).rotation.y, transform.GetChild(NewIndex).rotation.z);
-		Instantiate(Glow, transform.GetChild(NewIndex).position, CreateAngle);
 	}
 }
