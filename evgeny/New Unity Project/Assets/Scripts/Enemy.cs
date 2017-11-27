@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
 	public int HealthPoint = 100;
 	private Transform target;
 	private int wayPointIndex = 0;
+	// время, в течение которого объект морозится
 	public float TimeOfFreez;
 	private Color Old = Color.blue;
 
@@ -22,7 +23,7 @@ public class Enemy : MonoBehaviour
 		// this.GetComponent<Renderer>().material.color = Old;
 		this.GetComponent<Renderer>().material.color = Color.Lerp(Color.white, Old, speedOfEnemy / 10f);
 
-		// увеличиваем TimeOfFreez из скрипта Freeze, а потом уменьшаем его
+		// увеличиваем TimeOfFreez из скрипта Freeze, а потом уменьшаем его в этом if.
 		if (TimeOfFreez > 0.0f)
 		{
 			if (speedOfEnemy > 0)
@@ -31,7 +32,7 @@ public class Enemy : MonoBehaviour
 				// this.GetComponent<Renderer>().material.color = Color.Lerp(Color.white, Old, speedOfEnemy / 10f);
 			}
 			TimeOfFreez -= Time.deltaTime;
-			// как только TimeOfFreez станет <= 0, то скорость восстановится и в if больше не войдет
+			// как только TimeOfFreez станет <= 0, то скорость восстановится и в if больше не войдет.
 			if (TimeOfFreez <= 0.0f)
 			{
 				speedOfEnemy = 10.0f;

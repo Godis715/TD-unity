@@ -8,6 +8,8 @@ public class MissileScript : MonoBehaviour
 	public string EnemyTag = "Enemy";
 	public Transform PartToRotation;
 	GameObject FirstEnemy = null;
+	// скорострельность пушки 3/сек.
+	// сейчас равна 0, так как пушка по идее сразу готова стрелять.
 	private float TimeOfShoot = 0.0f;
 
 	Color Old = Color.blue;
@@ -22,6 +24,11 @@ public class MissileScript : MonoBehaviour
 		{
 			GameObject[] Enemies = GameObject.FindGameObjectsWithTag(EnemyTag);
 			int SizeArray = Enemies.Length;
+			// все enemy располагаются в массиве как в иерархии
+			// поэтому пушка ищет первого из иерархии, который попал в радиус
+			// но если объект был замороже, то в иерархии он может быть первым,
+			// а на поле между другими
+			// если есть предложения как исправить, то пишите коммет под этими строками
 			for (int i = 0; i < SizeArray; ++i)
 			{
 				float DistanceToEnemy = Vector3.Distance(transform.position, Enemies[i].transform.position);
@@ -45,11 +52,12 @@ public class MissileScript : MonoBehaviour
 		else
 		{
 			Target = null;
-			if (FirstEnemy.GetComponent<Enemy>().TimeOfFreez > 0.0f)
-			{
-				// FirstEnemy.GetComponent<Enemy>().GetComponent<Renderer>().material.color = Old;
-				// FirstEnemy.GetComponent<Enemy>().speedOfEnemy = 10.0f;
-			}
+			// так как обычные пушки больше не замедля.т то в этом участке нет смылса, но на всякий случай я его оставлю
+			//if (FirstEnemy.GetComponent<Enemy>().TimeOfFreez > 0.0f)
+			//{
+			//	FirstEnemy.GetComponent<Enemy>().GetComponent<Renderer>().material.color = Old;
+			//	FirstEnemy.GetComponent<Enemy>().speedOfEnemy = 10.0f;
+			//}
 		}
 	}
 	void Update()
@@ -70,6 +78,7 @@ public class MissileScript : MonoBehaviour
 		PartToRotation.rotation = Quaternion.Euler(0.0f, Rotation.y, 0.0f);
 	}
 
+	// стрельба и отнятие жизней у enemy
 	void Shooting()
 	{
 		// FirstEnemy.GetComponent<Enemy>().GetComponent<Renderer>().material.color = Color.red;

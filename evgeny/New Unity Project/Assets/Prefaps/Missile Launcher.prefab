@@ -70,6 +70,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4222405875626060}
+  - component: {fileID: 114284215540840624}
   m_Layer: 0
   m_Name: Missile Launcher
   m_TagString: Untagged
@@ -257,3 +258,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1453312654202594}
   m_Mesh: {fileID: 4300002, guid: 804bb11de2d77594882fde78479affc7, type: 3}
+--- !u!114 &114284215540840624
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1706984776079820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cba8f20a4d9ea44fa2fa7f441ab2b1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 0}
+  Range: 15
+  EnemyTag: Enemy
+  PartToRotation: {fileID: 0}

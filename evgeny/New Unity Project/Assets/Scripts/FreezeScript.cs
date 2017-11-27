@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class FreezeScript : MonoBehaviour
 {
-	public float Range = 20.0f;
+	public float Range = 10.0f;
 	public string EnemyTag = "Enemy";
+	// скорострельность пушки 4/сек.
+	// сейчас равна 0, так как пушка по идее сразу готова стрелять.
 	private float TimeOfShoot = 0.0f;
 	GameObject FirstEnemy = null;
 	Color Old = Color.blue;
