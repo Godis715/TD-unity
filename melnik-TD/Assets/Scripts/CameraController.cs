@@ -23,29 +23,32 @@ public class CameraController : MonoBehaviour {
             return;
         }
 
-        if (Input.GetKey("w") || Input.mousePosition.y >= Screen.height - panBorder)
+        
+
+        if ((Input.GetKey("w") || Input.mousePosition.y >= Screen.height - panBorder) && transform.position.z <=125f)
         {
             transform.Translate(Vector3.forward * panSpeed * Time.deltaTime, Space.World);
         }
-        if (Input.GetKey("s") || Input.mousePosition.y <= panBorder)
+        if ((Input.GetKey("s") || Input.mousePosition.y <= panBorder) && transform.position.z >= -50f)
         {
             transform.Translate(Vector3.back * panSpeed * Time.deltaTime, Space.World);
         }
-        if (Input.GetKey("d") || Input.mousePosition.x >= Screen.width - panBorder)
+        if ((Input.GetKey("d") || Input.mousePosition.x >= Screen.width - panBorder) && transform.position.x <= 125f)
         {
             transform.Translate(Vector3.right * panSpeed * Time.deltaTime, Space.World);
         }
-        if (Input.GetKey("a") || Input.mousePosition.x <= panBorder)
+        if ((Input.GetKey("a") || Input.mousePosition.x <= panBorder) && transform.position.x >= -50f)
         {
             transform.Translate(Vector3.left * panSpeed * Time.deltaTime, Space.World);
         }
 
         float scroll = Input.GetAxis("Mouse ScrollWheel");
-
+        // изменение высоты камеры привязано к повороту камеры
+        // RTS - наше все
         Vector3 pos = transform.position;
         Quaternion rot = transform.rotation;
         rot.x -= scroll * scrollSpeed * Time.deltaTime;
-        pos.y -= scroll * 100f * scrollSpeed * Time.deltaTime;// * (maxY-minY)/90;
+        pos.y -= scroll * 100f * scrollSpeed * Time.deltaTime;
         pos.y = Mathf.Clamp(pos.y, minY, maxY);
         rot.x = Mathf.Clamp(rot.x,0f,0.7073f);
         

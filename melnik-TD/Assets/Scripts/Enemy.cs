@@ -14,6 +14,7 @@ public class Enemy : MonoBehaviour {
     void Start ()
     {
         target = Waypoints.points[0];
+        // запоминаем начальный цвет
         firstColor = transform.GetComponent<Renderer>().material.color;
     }
 
@@ -21,7 +22,9 @@ public class Enemy : MonoBehaviour {
     {
         Vector3 dir = target.position - transform.position;
         transform.Translate(dir.normalized * speed * Time.deltaTime, Space.World);
+        // запоминаем скорость для передачи как вектора силы при взрыве
         startingForce = dir.normalized* speed * Time.deltaTime;
+
         if (Vector3.Distance(transform.position, target.position) < 0.7f)
         {
             GetNextWaypoint();
@@ -30,6 +33,8 @@ public class Enemy : MonoBehaviour {
         {
             EnemyDeath();
         }
+
+        // изменение цвета при получении урона (стремится к {255,0,0})
         Color nextColor ;
         nextColor = transform.GetComponent<Renderer>().material.color;
         nextColor.r = firstColor.r + (255f - firstColor.r) * (1-Mathf.Cos((100f -health) / 100f));
@@ -56,6 +61,7 @@ public class Enemy : MonoBehaviour {
     {
         Destroy(gameObject);
         Explosion blood = Instantiate(bloodPrefab, transform.position, transform.rotation);
+        // передача скорости как силы при вызрые
         blood.startForce = startingForce;
     }
 }

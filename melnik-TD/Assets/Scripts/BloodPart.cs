@@ -7,7 +7,7 @@ public class BloodPart : MonoBehaviour {
  
     void Update()
     {
-
+        // плавное исчезновение кусочка КРОВИИИИ
         t = transform.GetComponent<Renderer>().material.color;
         t.a -= Time.deltaTime / 7f;
         if (t.a <= 0f)

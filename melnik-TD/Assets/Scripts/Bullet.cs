@@ -38,10 +38,13 @@ public class Bullet : MonoBehaviour {
     
     void HitTarget()
     {
+        // создание эффекта попадания
         GameObject impEff =  Instantiate(impactEffect, transform.position, transform.rotation);
+        // нанесение урона цели при попадании
         float curHealth = target.GetComponent<Enemy>().health;
         curHealth -= damage;
         target.GetComponent<Enemy>().health = curHealth;
+        // удаление эффекта попадания и самой пули
         Destroy(impEff, 1f);
         Destroy(gameObject);
     }
