@@ -28,5 +28,13 @@ public class NodeColoring_script : MonoBehaviour
 	void OnMouseDown()
 	{
 		rend.material.color = clickedColor;
+		if (!this.GetComponent<TurretBuilder_script>().turretBuilt)
+		{
+			this.GetComponent<TurretBuilder_script>().BuildTurret();
+		}
+		else
+		{
+			Debug.LogWarning("Building error! On node " + this.name + " turret already exists!");
+		}
 	}
 }

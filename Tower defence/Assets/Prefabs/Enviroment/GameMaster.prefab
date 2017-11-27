@@ -54,5 +54,5 @@ MonoBehaviour:
   timeBetweenWaves: 5.5
   enemyPrefab: {fileID: 1679028547188440, guid: f8d61feecfa8ab242afef33a78b59b6b,
     type: 2}
-  spawnPoint: {fileID: 0}
+  spawnPoint: {fileID: 4625414677775362, guid: 447a4f2ed91ad064fa2cded7f0296984, type: 2}
   countDownTimerDisplay: {fileID: 0}

@@ -2,12 +2,10 @@
 
 public class TurretAiming_script : MonoBehaviour
 {
-	private Transform target;
+	private GameObject target;
 
 	[Header("Turret parameters")]
 	public float range = 15.0f;
-	public float shootingFrequency = 10.0f;
-	public float damage = 1.0f;
 	public float rotationSpeed = 12.5f;
 
 	[Header("Other")]
@@ -17,7 +15,7 @@ public class TurretAiming_script : MonoBehaviour
 
 	void Start()
 	{
-		InvokeRepeating("UpdateTarget", 0f, 1.0f / enemySearchFrequency);
+		InvokeRepeating("CheckTarget", 0f, 1.0f / enemySearchFrequency);
 	}
 
 	void Update()
@@ -32,6 +30,19 @@ public class TurretAiming_script : MonoBehaviour
 		Vector3 rotation = Quaternion.Lerp(rotateDirector.transform.rotation, toRotate, rotationSpeed * Time.deltaTime).eulerAngles;
 		rotateDirector.transform.rotation = Quaternion.Euler(0f, rotation.y, 0f);
 	}
+
+	void CheckTarget()
+	{
+		if(target == null)
+		{
+			UpdateTarget();
+		}
+		else if(Vector3.Distance(this.transform.position, target.transform.position) > range)
+		{
+			UpdateTarget();
+		}
+	}
+
 	void UpdateTarget()
 	{
 		GameObject[] allEnemies = GameObject.FindGameObjectsWithTag(enemyTag);
@@ -48,12 +59,13 @@ public class TurretAiming_script : MonoBehaviour
 		}
 		if(nearestEnemy != null && minimalDistacne <= range)
 		{
-			target = nearestEnemy.transform;
+			target = nearestEnemy;
 		}
 		else
 		{
 			target = null;
 		}
+		this.GetComponent<TurretShooting_script>().SetTarget(target);
 	}
 
 	void OnDrawGizmosSelected()

@@ -123,3 +123,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5da096893b39ea47b272e94aabbc7ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  turretPrefab: {fileID: 1846892124175472, guid: a2fb73999b7ebd048b283b09f698767c,
+    type: 2}
+  turretBuilt: 0
