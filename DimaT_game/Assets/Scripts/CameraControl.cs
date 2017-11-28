@@ -18,37 +18,29 @@ public class CameraControl : MonoBehaviour {
 		float depth = Mathf.Round(Mathf.Abs(transform.position.y - startPosition.y));
 		radius = Mathf.Round(Mathf.Sqrt(2.0f * startPosition.y * depth - depth * depth));
 		//приближение камеры
-		if (Input.GetKey(KeyCode.KeypadPlus) && transform.position.y - delta >= 4.0f)
+		if (Input.GetKey(KeyCode.Equals) && transform.position.y - delta >= 4.0f)
 		{
+			Input.GetKey(KeyCode.LeftShift);
 			x = 0.0f;  y = -delta; z = 0.0f;
 			CreatePosition();
 		}
 		//отдаление камеры
-		if (Input.GetKey(KeyCode.KeypadMinus))
+		if (Input.GetKey(KeyCode.Minus))
 		{
 			//переменные, дающие понять, что по всем координнатам мы находится достаточно близко относительно startPosition
 			bool checkPosY = false, checkPosX = false, checkPosZ = false;
-			/*Проверка на близость осуществляется в 3 этапа:
-			 1. Если мы очень близко, сравнимо величине Time.deltatime, то приближение больше не делаем, 
-			 дабы избежать перепрыгивания через StartPosition, и извещаем о нашей близости
-			 2. Если дальше чем Time.deltatime, но ближе чем установленный шаг delta, приближаемся по чуть-чуть
-			 3. Если же дальше чем delta, то смело берём шаг в delta
+			/*
+				-Если мы достаточно далеко от StartPosition, то приближаемся с шагом в delta
+				-Если приблизились достаточно близко по какой-либо координате, то приближение останавливаем и отмечаем это в переменной bool
+				-Когда по всем трём координатам мы достаточно близко, просто берём координаты StartPosition
 			*/
 			if (transform.position.y + delta <= startPosition.y)
 			{
 				y = delta;
-				if (Mathf.Abs(transform.position.y - startPosition.y) < delta)
+				if (Mathf.Abs(transform.position.y - startPosition.y) < delta * 2)
 				{
-					if (Mathf.Abs(transform.position.y - startPosition.y) >= Time.deltaTime)
-					{
-						y = Mathf.Abs(transform.position.y - startPosition.y) * Time.deltaTime;
-						checkPosY = true;
-					}
-					else
-					{
-						y = 0.0f;
-					}
-						
+					y = 0.0f;
+					checkPosY = true;		
 				}
 			}
 			else
@@ -66,19 +58,10 @@ public class CameraControl : MonoBehaviour {
 				{
 					x = delta;
 				}
-				if (Mathf.Abs(transform.position.x - startPosition.x) < delta)
+				if (Mathf.Abs(transform.position.x - startPosition.x) < delta * 2)
 				{
-					if (Mathf.Abs(transform.position.x - startPosition.x) >= Time.deltaTime)
-					{
-						checkPosX = true;
-						// (x/delta) нужно для того, чтобы не нарушить направленность, ибо мы расстояние смотрим по модулю
-						x = Mathf.Abs(transform.position.x - startPosition.x) * (x / delta) * Time.deltaTime;
-					}
-					else
-					{
-						x = 0.0f;
-					}
-						
+					x = 0.0f;
+					checkPosX = true;
 				}
 			}
 			else
@@ -95,17 +78,10 @@ public class CameraControl : MonoBehaviour {
 				{
 					z = delta;
 				}
-				if (Mathf.Abs(transform.position.z - startPosition.z) < delta)
+				if (Mathf.Abs(transform.position.z - startPosition.z) < delta * 2)
 				{
-					if (Mathf.Abs(transform.position.z - startPosition.z) >= Time.deltaTime)
-					{
-						checkPosZ = true;
-						z = Mathf.Abs(transform.position.z - startPosition.z) * (z / delta) * Time.deltaTime;
-					}
-					else
-					{
-						z = 0.0f;
-					}
+					z = 0.0f;
+					checkPosZ = true;
 				}
 			}
 			else
@@ -123,25 +99,25 @@ public class CameraControl : MonoBehaviour {
 			}
 		}
 		//сдвиг камеры вверх
-		if (Input.GetKey(KeyCode.Keypad8) && transform.position.x - delta >= startPosition.x - radius)
+		if (Input.GetKey(KeyCode.W) && transform.position.x - delta >= startPosition.x - radius)
 		{
 			x = -delta; y = 0.0f; z = 0.0f;
 			CreatePosition();
 		}
 		//сдвиг камеры вниз
-		if (Input.GetKey(KeyCode.Keypad2) && transform.position.x + delta <= startPosition.x + radius)
+		if (Input.GetKey(KeyCode.S) && transform.position.x + delta <= startPosition.x + radius)
 		{
 			x = delta; y = 0.0f; z = 0.0f;
 			CreatePosition();
 		}
 		//сдвиг камеры влево
-		if (Input.GetKey(KeyCode.Keypad4) && transform.position.z - delta >= startPosition.z - radius)
+		if (Input.GetKey(KeyCode.A) && transform.position.z - delta >= startPosition.z - radius)
 		{
 			x = 0.0f; y = 0.0f; z = -delta;
 			CreatePosition();
 		}
 		//свдиг камеры вправо
-		if (Input.GetKey(KeyCode.Keypad6) && transform.position.z + delta <= startPosition.z + radius)
+		if (Input.GetKey(KeyCode.D) && transform.position.z + delta <= startPosition.z + radius)
 		{
 			x = 0.0f; y = 0.0f; z = delta;
 			CreatePosition();
