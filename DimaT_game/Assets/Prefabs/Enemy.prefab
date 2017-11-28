@@ -101,7 +101,8 @@ MonoBehaviour:
   signal: {fileID: 8300000, guid: fbfa267d5ebf96041aa39c6707a7d15d, type: 3}
   TagSpeedUp: SpeedUp
   health: 100
-  Blood: {fileID: 1859175268069210, guid: e694b221b128bd741ab8b43a7658cf57, type: 2}
+  bloodEffect: {fileID: 1420812428138034, guid: e30d9ebb6bb241546acf7493edf3f6c8,
+    type: 2}
 --- !u!135 &135609955552284580
 SphereCollider:
   m_ObjectHideFlags: 1

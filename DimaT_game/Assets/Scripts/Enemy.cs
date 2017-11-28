@@ -9,12 +9,15 @@ public class Enemy : MonoBehaviour {
 	private int waypointIndex = 0;
 	//Звук смерти
 	public AudioClip death;
+	//Звук добавления денег
 	public AudioClip bonus;
+	//Звук упущенного Enemy
 	public AudioClip signal;
 	//Тег для поиска пилюль
 	public string TagSpeedUp = "SpeedUp";
 	//Состояние здоровья
 	public float health = 100f;
+	public GameObject bloodEffect;
 	void Start()
 	{
 		target = Waypoits.points[0];
@@ -23,7 +26,9 @@ public class Enemy : MonoBehaviour {
 	{
 		if (health <= 0.0f)
 		{
-			SpawnBlood();
+			Destroy(gameObject);
+			GameObject blood = Instantiate(bloodEffect, transform.position, transform.rotation);
+			Destroy(blood, 2f);
 			return;
 		}
 		//Проверка на таргет пилюли
@@ -68,127 +73,5 @@ public class Enemy : MonoBehaviour {
 		}
 		waypointIndex++;
 		target = Waypoits.points[waypointIndex];
-	}
-
-
-	//Код, отвечающий за спаун крови
-	public GameObject Blood;
-	private Color color;
-	//Координаты относительно позиции Enemy
-	private float x = 0.0f;
-	private float y = 0.0f;
-	private float z = 0.0f;
-	//Угол шага
-	private float angle = 0.0f;
-	//Направление для импульса
-	private Vector3 dir;
-	//Заспаунившаяся кровинка
-	private GameObject bloodNow;
-
-	void SpawnBlood()
-	{
-		//Кровь будет спаунится в 3-х плоскостях
-		PlaneOne();
-		PlaneTwo();
-		PlaneThree();
-		//Зарплата за убийство
-		Player.NewMoney += 2f;
-		//Озвучка получения денег
-		AudioSource.PlayClipAtPoint(bonus, transform.position);
-		//Подсчёт фрага
-		Player.frags += 1f;
-		//Озвучка смерти
-		AudioSource.PlayClipAtPoint(death, transform.position);
-		Destroy(gameObject);
-	}
-	//Плоскость x0z
-	void PlaneOne()
-	{
-		//Середина
-		WorkWithOneBlood();
-		//Внешний круг
-		for (float i = 1f; i <= 12f; i++)
-		{
-			//Подсчёт координат спауна
-			//Радиус равен 1
-			x = Mathf.Sin(angle);
-			y = 0.0f;
-			z = Mathf.Cos(angle);
-			// Угол шага равен Пи/6
-			angle += 3.14f / 6.0f;
-			//Cпаун
-			WorkWithOneBlood();
-		}
-		//Внутренний круг
-		for (float i = 1f; i <= 12f; i++)
-		{
-			//Подсчёт координат спауна
-			//Радиус равен 0.5
-			x = Mathf.Sin(angle) * 0.5f;
-			y = 0.0f;
-			z = Mathf.Cos(angle) * 0.5f;
-			//Угол шага равен Пи/2
-			angle += 3.14f / 2.0f;
-			//Cпаун
-			WorkWithOneBlood();
-		}
-	}
-	//Плоскость y0z
-	void PlaneTwo()
-	{
-		//Внешний круг
-		for (float i = 1f; i <= 12f; i++)
-		{
-			x = 0.0f;
-			y = Mathf.Sin(angle);
-			z = Mathf.Cos(angle);
-			angle += 3.14f / 6.0f;
-			//Исключаем угол Пи, так как там уже есть Кровинка
-			if (angle != 0.0f && angle != 3.14f)
-			{
-				WorkWithOneBlood();
-			}
-		}
-		//Внутренний круг
-		for (float i = 1f; i <= 12f; i++)
-		{
-			x = 0.0f;
-			y = Mathf.Sin(angle) * 0.5f;
-			z = Mathf.Cos(angle) * 0.5f;
-			angle += 3.14f / 2.0f;
-			if (angle != 0.0f && angle != 3.14f)
-			{
-				WorkWithOneBlood();
-			}
-		}
-	}
-	//Плоскость x0y
-	void PlaneThree()
-	{
-		//Внешний круг
-		for (float i = 1f; i <= 12f; i++)
-		{
-			x = Mathf.Sin(angle);
-			y = Mathf.Cos(angle);
-			z = 0.0f;
-			angle += 3.14f / 6.0f;
-			//Исключаем угол П/2 Пи 3Пи/2
-			if (angle != 0.0f && angle != 3.14f && angle != (3.14f /2.0f) && angle != (3.14f * 3.0f / 2.0f))
-			{
-				WorkWithOneBlood();
-			}
-		}
-		//Внутренний уже заполнен
-	}
-
-	void WorkWithOneBlood()
-	{
-		//Спаун
-		Vector3 position1 = new Vector3(transform.position.x + x, transform.position.y + y, transform.position.z + z);
-		GameObject bloodNow = Instantiate(Blood, position1, transform.rotation);
-
-		//Задание импульса
-		Vector3 dir = bloodNow.transform.position - transform.position;
-		bloodNow.transform.GetComponent<Rigidbody>().AddRelativeForce(dir * 10, ForceMode.Impulse);
 	}
 }

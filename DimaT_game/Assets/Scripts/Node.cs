@@ -9,6 +9,7 @@ public class Node : MonoBehaviour {
 	private int OldIndex = 0;
 	//Параметр поля (длина может быть любая)
 	public int width = 16;
+	private float priceTurret = 10;
 	//Звук покупки турели
 	public AudioClip buy;
 	void Update () {
@@ -20,7 +21,7 @@ public class Node : MonoBehaviour {
 			do
 			{
 				NewIndex--;
-				if (OldIndex < 0)
+				if (NewIndex < 0)
 				{
 					NewIndex = OldIndex;
 					break;
@@ -36,7 +37,7 @@ public class Node : MonoBehaviour {
 			do
 			{
 				NewIndex++;
-				if (OldIndex == transform.childCount)
+				if (NewIndex == transform.childCount)
 				{
 					NewIndex = OldIndex;
 					break;
@@ -51,7 +52,7 @@ public class Node : MonoBehaviour {
 			do
 			{
 				NewIndex += width;
-				if (OldIndex >= transform.childCount)
+				if (NewIndex >= transform.childCount)
 				{
 					NewIndex = OldIndex;
 					break;
@@ -66,7 +67,7 @@ public class Node : MonoBehaviour {
 			do
 			{
 				NewIndex -= width;
-				if (OldIndex < 0)
+				if (NewIndex < 0)
 				{
 					NewIndex = OldIndex;
 					break;
@@ -78,7 +79,7 @@ public class Node : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.Space) && transform.GetChild(NewIndex).GetComponent<Renderer>().material.color != Color.yellow) 
 		{
 			//Проверка на наличие денег
-			if (Player.NewMoney != 0f)
+			if (Player.NewMoney - priceTurret >= 0f)
 			{
 				//Звук покупки
 				AudioSource.PlayClipAtPoint(buy, transform.GetChild(NewIndex).position);
@@ -108,17 +109,21 @@ public class Node : MonoBehaviour {
 	//Подстветка
 	void Backlight ()
 	{
-		//Чтобы не закрасить в красный цвет node, где стоит турель
-		if (transform.GetChild(NewIndex).GetComponent<Renderer>().material.color != Color.yellow)
+		if (NewIndex != OldIndex)
 		{
-			//окраска
-			transform.GetChild(NewIndex).GetComponent<Renderer>().material.color = Color.red;
+			//Чтобы не закрасить в красный цвет node, где стоит турель
+			if (transform.GetChild(NewIndex).GetComponent<Renderer>().material.color != Color.yellow)
+			{
+				//окраска
+				transform.GetChild(NewIndex).GetComponent<Renderer>().material.color = Color.red;
+			}
+			//Чтобы не закрасить в белый цвет node,где поставили турель
+			if (transform.GetChild(OldIndex).GetComponent<Renderer>().material.color != Color.yellow)
+			{
+				//окраска
+				transform.GetChild(OldIndex).GetComponent<Renderer>().material.color = Color.white;
+			}
 		}
-		//Чтобы не закрасить в белый цвет node,где поставили турель
-		if (transform.GetChild(OldIndex).GetComponent<Renderer>().material.color != Color.yellow)
-		{
-			//окраска
-			transform.GetChild(OldIndex).GetComponent<Renderer>().material.color = Color.white;
-		}
+		
 	}
 }

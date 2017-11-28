@@ -16,7 +16,8 @@ public class Turret : MonoBehaviour {
 	private float timeShot = 0.0f;
 	//Звук стрельбы
 	public AudioClip shot;
-
+	//Конец ствола
+	public Transform barrel;
 	void Start () {
 		InvokeRepeating("UpdateTarget", 0f, 0.1f);
 	}
@@ -50,9 +51,6 @@ public class Turret : MonoBehaviour {
 		Quaternion lookRatation = Quaternion.LookRotation(dir);
 		Vector3 rotation = Quaternion.Lerp(PartToRotate.rotation, lookRatation, Time.deltaTime * turnSpeed).eulerAngles;
 		PartToRotate.rotation = Quaternion.Euler(0f, rotation.y, 0f);
-		Vector3 positionEffect = new Vector3(PartToRotate.GetChild(0).position.x + 0.15f, PartToRotate.GetChild(0).position.y - 0.12f, PartToRotate.GetChild(0).position.z - 0.5f);
-		Instantiate(effect, positionEffect, PartToRotate.rotation);
-
 		//Проверка, прошла ли перезарядка
 		if (timeShot <= 0.0f)
 		{
@@ -67,6 +65,8 @@ public class Turret : MonoBehaviour {
 	{
 		//Озвучка стрельбы
 		AudioSource.PlayClipAtPoint(shot, transform.position);
+		//Еффект стрельбы 
+		Instantiate(effect, barrel.position, barrel.rotation);
 		//Нанесение дамага
 		nearestEnemy.transform.GetComponent<Enemy>().health -= damage;
 		//Окрас Enemy в зависимости от суммарного нанесённого урона
