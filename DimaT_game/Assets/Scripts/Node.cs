@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class Node : MonoBehaviour {
 	public Transform turretPrefab;
-
 	//Для хождения по полю
 	private int NewIndex = 0;
 	private int OldIndex = 0;
@@ -12,6 +11,7 @@ public class Node : MonoBehaviour {
 	private float priceTurret = 10;
 	//Звук покупки турели
 	public AudioClip buy;
+	public static int countTurret = 0;
 	void Update () {
 		//Влево
 		if (Input.GetKeyDown(KeyCode.LeftArrow) && NewIndex - 1 >= 0)
@@ -81,6 +81,7 @@ public class Node : MonoBehaviour {
 			//Проверка на наличие денег
 			if (Player.NewMoney - priceTurret >= 0f)
 			{
+				countTurret++;
 				//Звук покупки
 				AudioSource.PlayClipAtPoint(buy, transform.GetChild(NewIndex).position);
 				//Подсветка

@@ -23,26 +23,33 @@ public class Turret : MonoBehaviour {
 	}
 	void UpdateTarget()
 	{
-		GameObject[] enemies = GameObject.FindGameObjectsWithTag(tagEnemy);
-		float shortingDistance = Mathf.Infinity;
-		foreach (GameObject enemy in enemies)
-		{
-			float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
-			if (distanceToEnemy < shortingDistance)
-			{
-				shortingDistance = distanceToEnemy;
-				nearestEnemy = enemy;
-			}
-		}
-		if (nearestEnemy != null && shortingDistance <= range)
+		if (nearestEnemy != null && nearestEnemy.transform.GetComponent<Enemy>().health > 0 && Vector3.Distance(nearestEnemy.transform.position,transform.position) < range)
 		{
 			target = nearestEnemy.transform;
-		}
-		else
+		}else
 		{
-			target = null;
+			GameObject[] enemies = GameObject.FindGameObjectsWithTag(tagEnemy);
+			float shortingDistance = Mathf.Infinity;
+			foreach (GameObject enemy in enemies)
+			{
+				float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
+				if (distanceToEnemy < shortingDistance)
+				{
+					shortingDistance = distanceToEnemy;
+					nearestEnemy = enemy;
+				}
+			}
+			if (nearestEnemy != null && shortingDistance <= range)
+			{
+				target = nearestEnemy.transform;
+			}
+			else
+			{
+				target = null;
+			}
 		}
 	}
+
 	// Update is called once per frame
 	void Update () {
 		if (target == null)
@@ -70,7 +77,7 @@ public class Turret : MonoBehaviour {
 		//Нанесение дамага
 		nearestEnemy.transform.GetComponent<Enemy>().health -= damage;
 		//Окрас Enemy в зависимости от суммарного нанесённого урона
-		nearestEnemy.transform.GetComponent<Renderer>().material.color = Color.Lerp(nearestEnemy.transform.GetComponent<Renderer>().material.color, Color.red, 0.2f);
+		nearestEnemy.transform.GetComponent<Renderer>().material.color = Color.Lerp(nearestEnemy.transform.GetComponent<Renderer>().material.color, Color.red, damage / nearestEnemy.GetComponent<Enemy>().health);
 	}
 	void InDrawGizmosSelected()
 	{

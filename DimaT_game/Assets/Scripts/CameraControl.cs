@@ -3,18 +3,63 @@ using UnityEngine;
 
 public class CameraControl : MonoBehaviour {
 	private Vector3 startPosition;
+	private Vector3 originalPositionForTab;
+	private Quaternion originalRotationForTab;
 	public float speed = 30.0f;
 	private float delta = 0.1f;
 	private float radius = 0.0f;
 	private float x = 0.0f;
 	private float y = 0.0f;
 	private float z = 0.0f;
+	public string TagTurret = "Turret";
+	private int indexTurret = 0;
+	private GameObject[] turretView;
+	private int countTurret = 0;
 	void Start () {
 		// начальная позиция камеры
 		startPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
 	}
 	// Update is called once per frame
 	void Update () {
+		if (Input.GetKeyDown(KeyCode.Tab))
+		{
+			// Сведения в момент нажания на Tab
+			originalPositionForTab = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+			originalRotationForTab = transform.rotation;
+			turretView = GameObject.FindGameObjectsWithTag(TagTurret);
+			countTurret = Node.countTurret;
+		}
+		if (Input.GetKey(KeyCode.Tab))
+		{
+			if (Input.GetKeyDown(KeyCode.LeftArrow))
+			{
+				if (indexTurret != 0)
+				{
+					indexTurret--;
+				}
+				else
+				{
+					indexTurret = countTurret - 1;
+				}
+			}
+			if (Input.GetKeyDown(KeyCode.RightArrow))
+			{
+				if (indexTurret != countTurret - 1)
+				{
+					indexTurret++;
+				}else
+				{
+					indexTurret = 0;
+				}
+			}
+			transform.rotation = turretView[indexTurret].transform.GetChild(0).GetChild(2).rotation;
+			transform.position = turretView[indexTurret].transform.GetChild(0).GetChild(2).position;
+		}
+		if (Input.GetKeyUp(KeyCode.Tab))
+		{
+			transform.rotation = originalRotationForTab;
+			transform.position = originalPositionForTab;
+		}
 		float depth = Mathf.Round(Mathf.Abs(transform.position.y - startPosition.y));
 		radius = Mathf.Round(Mathf.Sqrt(2.0f * startPosition.y * depth - depth * depth));
 		//приближение камеры
