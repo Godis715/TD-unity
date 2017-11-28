@@ -27,8 +27,13 @@ public class Enemy : MonoBehaviour {
 		if (health <= 0.0f)
 		{
 			Destroy(gameObject);
-			GameObject blood = Instantiate(bloodEffect, transform.position, transform.rotation);
+			Quaternion rotationBlood = Quaternion.Euler(-90f, 0f, 0f);
+			GameObject blood = Instantiate(bloodEffect, transform.position, rotationBlood);
 			Destroy(blood, 2f);
+			AudioSource.PlayClipAtPoint(bonus, transform.position);
+			AudioSource.PlayClipAtPoint(death, transform.position);
+			Player.NewMoney += 2f;
+			Player.frags++;
 			return;
 		}
 		//Проверка на таргет пилюли
