@@ -8,7 +8,7 @@ public class Turret : MonoBehaviour {
 	public float range = 15f;
 	public string enemyTag = "Enemy";
 
-	public float fireInSecond = 1f;
+	public float shotsPerSecond = 1f;
 	private float fireCooldown = 0f;
 	public float damagePerShot = 20f;
 
@@ -59,14 +59,14 @@ public class Turret : MonoBehaviour {
 		Vector3 rotation = lookRotation.eulerAngles;
 		RotationPart.rotation = Quaternion.Euler(0f, rotation.y, 0f);
 
-		if (fireCooldown <= 1 / fireInSecond && target != null)
+		if (fireCooldown <= 0)
 		{
 			Damage(target);
-			fireCooldown = 1f;
+			fireCooldown = 1 / shotsPerSecond;
 		}
 		else
 		{
-			fireCooldown -= 1 / fireInSecond;
+			fireCooldown -= Time.deltaTime;
 		}
 	}
 
