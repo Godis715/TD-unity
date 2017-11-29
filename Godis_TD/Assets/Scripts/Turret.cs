@@ -4,14 +4,19 @@ using UnityEngine;
 
 public class Turret : MonoBehaviour {
 
+	[Header ("Attribute")]
+
 	public float range = 15f;
+	private float fireRate = 15f;
+	public float fireCountdown = 0f;
+
+	[Header ("Unity Setup Field")]
 	public Transform target;
-
 	public string enemyTag = "Enemy";
-
 	public Transform center;
-
 	public GameObject nearestEnemy = null;
+	public GameObject bulletPrefab;
+	public Transform firePoint;
 
 	void Start () {
 		InvokeRepeating("UpdateTarget", 0f, 0.5f);
@@ -40,7 +45,14 @@ public class Turret : MonoBehaviour {
 			target = null;
 		}
 	}
-	
+
+	void Shoot()
+	{
+		Debug.Log("SHOOT!");
+		GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+		bullet.GetComponent<Bullet>().enemy = nearestEnemy;
+	}
+
 	void Update () {
 		if (target == null) {
 			return;
@@ -51,17 +63,11 @@ public class Turret : MonoBehaviour {
 		Vector3 rotation = Quaternion.Lerp(center.rotation, lookRotation, Time.deltaTime * 8f).eulerAngles;
 		center.rotation = Quaternion.Euler(0f, rotation.y, 0f);
 
-		if (nearestEnemy != null) {
-			nearestEnemy.GetComponent<Enemy>().health -= 30f * Time.deltaTime;
-			if (nearestEnemy.GetComponent<Enemy>().health <= 0f)
-			{
-				Destroy(nearestEnemy);
-			}
-			else {
-				nearestEnemy.GetComponent<MeshRenderer>().material.color = Color.Lerp(nearestEnemy.GetComponent<MeshRenderer>().material.color,
-					Color.red, nearestEnemy.GetComponent<Enemy>().health / 100f * Time.deltaTime);
-			}
+		if (fireCountdown <= 0f) {
+			Shoot();
+			fireCountdown = 1f / fireRate;
 		}
+		fireCountdown -= Time.deltaTime;
 
 	}
 
