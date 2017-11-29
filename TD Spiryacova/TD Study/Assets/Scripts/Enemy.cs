@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 
 public class Enemy : MonoBehaviour {
+
 	public float speed = 10f;
+	public float health = 100;
 
 	private Transform target;
 	private int waypointIndex = 0;
@@ -13,6 +15,10 @@ public class Enemy : MonoBehaviour {
 
 	void Update()
 	{
+		if (health <= 0)
+		{
+			Destroy(gameObject);
+		}
 		Vector3 dir = target.position - transform.position;
 		transform.Translate(dir.normalized * speed * Time.deltaTime, Space.World);
 
