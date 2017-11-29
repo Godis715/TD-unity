@@ -24,6 +24,8 @@ public class BuildManager : MonoBehaviour {
 
     private GameObject turretToBuild;
 
+
+    // при запросе в других скриптах турели для постройки Build Manager выдаст выбраную турель
     public GameObject GetTurretToBuild()
     {
         return turretToBuild;

@@ -29,7 +29,7 @@ public class Node : MonoBehaviour {
             cameraToSet.GetComponent<CameraController>().turretPosition = cameraPosition;
             return;
         }
-
+        // при нажатии Node запрашивает у Build Manager турель, которую нужно построить
         GameObject turretToBuild = BuildManager.instance.GetTurretToBuild();
         turret = (GameObject)Instantiate(turretToBuild, transform.position + positionOffset, transform.rotation);
     }
