@@ -14,6 +14,7 @@ public class Turret : MonoBehaviour {
     public string enemyTag = "Enemy";
     public GameObject bulletPrefab;
     public Transform firePoint;
+    public Transform cameraPosition;
 
     void Start ()
     {
@@ -23,7 +24,7 @@ public class Turret : MonoBehaviour {
     void CheckTarget()
     {
         // обновление таргета происходит только когда прошлый таргет вышел из range башни или нет таргета совсем
-        if (target == null )
+        if (target == null)
         {
             UpdateTarget();
         }
@@ -53,7 +54,7 @@ public class Turret : MonoBehaviour {
             if (nearestEnemy.transform != target)
             {
                 // когда появляется новый таргет, башня должна плавно повернуться на него через Lerp с rotatingSpeed
-                rotatingSpeed = 10f;
+                rotatingSpeed = 5f;
             }
             target = nearestEnemy.transform;
         }
@@ -75,7 +76,7 @@ public class Turret : MonoBehaviour {
         Quaternion lookRotation = Quaternion.LookRotation(dir);
         rotatingPart.rotation = Quaternion.Lerp(rotatingPart.rotation, lookRotation, Time.deltaTime * rotatingSpeed);
         // когда мы наводимся на таргет, Lerp с постоянной rotatingSpeed не успевает за движущейся целью, поэтому rotatingSpeed увеличивается пока не сменим таргет
-        rotatingSpeed *= 1 + 2 * Time.deltaTime;
+        rotatingSpeed *= 1 + 4 * Time.deltaTime;
 
         if (fireCountdown <= 0)
         {
@@ -97,4 +98,5 @@ public class Turret : MonoBehaviour {
         }
     }
 
+    
 }

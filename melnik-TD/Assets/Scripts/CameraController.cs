@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour {
-
+    public static bool isOnTurret = false;
     public float panSpeed = 30f;
     public float panBorder = 10f;
     private bool doMovement = true;
@@ -12,8 +12,29 @@ public class CameraController : MonoBehaviour {
     private float maxY = 92.5f;
     private float minX = -45f;
     private float maxX = 45f;
+    private Vector3 lastPosition;
+    private Quaternion lastRotation;
+    
+    public Transform turretPosition = null;
     void Update()
     {
+        if (isOnTurret && Input.GetKeyDown(KeyCode.Escape))
+        {
+            transform.position = lastPosition;
+            transform.rotation = lastRotation;
+            doMovement = true;
+            turretPosition = null;
+            return;
+        }
+        if (!isOnTurret)
+        {
+            putOnTurret(turretPosition);
+        }
+        else if (turretPosition != null)
+        {
+            UpdatePosition(turretPosition);
+        }
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             doMovement = !doMovement;
@@ -54,5 +75,25 @@ public class CameraController : MonoBehaviour {
         
         transform.position = pos;
         transform.rotation = rot;
+    }
+
+    public void putOnTurret(Transform turretPosition)
+    { 
+        if (turretPosition == null)
+        {
+            return;
+        }
+        doMovement = false;
+        lastPosition = transform.position;
+        lastRotation = transform.rotation;
+        transform.position = turretPosition.position;
+        transform.rotation = turretPosition.rotation;
+        isOnTurret = true;
+    }
+
+    void UpdatePosition(Transform position)
+    {
+        transform.position = position.position;
+        transform.rotation = Quaternion.Lerp(transform.rotation, position.rotation, Time.deltaTime * 1000f);
     }
 }

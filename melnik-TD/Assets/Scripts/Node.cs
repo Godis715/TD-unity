@@ -8,12 +8,15 @@ public class Node : MonoBehaviour {
     private Color startColor;
     private GameObject turret;
     public Vector3 positionOffset;
+    private Transform cameraPosition;
+    public GameObject cameraToSet;
 
     private void Start()
     {
         // запоминаем стартовый цвет, чтобы возвращаться к нему
         rend = GetComponent<Renderer>();
         startColor = rend.material.color;
+        cameraToSet = GameObject.FindGameObjectWithTag("MainCamera");
     }
 
     private void OnMouseDown()
@@ -21,7 +24,9 @@ public class Node : MonoBehaviour {
         // возведение башни
         if (turret != null)
         {
-            Debug.Log("Unable to build. There's something on the way");
+            //Debug.Log("Unable to build. There's something on the way");
+            cameraPosition = turret.GetComponent<Turret>().cameraPosition;
+            cameraToSet.GetComponent<CameraController>().turretPosition = cameraPosition;
             return;
         }
 
