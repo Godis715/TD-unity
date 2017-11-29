@@ -5,14 +5,14 @@ public class MissileScript : MonoBehaviour
 {
 	public Transform Target;
 	public float Range = 15.0f;
+	private int SpeedRotation = 10;
 	public string EnemyTag = "Enemy";
 	public Transform PartToRotation;
 	GameObject FirstEnemy = null;
 	// скорострельность пушки 3/сек.
 	// сейчас равна 0, так как пушка по идее сразу готова стрелять.
 	private float TimeOfShoot = 0.0f;
-
-	Color Old = Color.blue;
+	private float RateOfFire = 3.0f;
 	void Start()
 	{
 		InvokeRepeating("UpdateTarget", 0.0f, 0.1f);
@@ -41,23 +41,27 @@ public class MissileScript : MonoBehaviour
 			}
 		}
 
-		if (FirstEnemy != null && DistanceToFirstEnemy <= Range)
+		if (FirstEnemy != null)
 		{
-			Target = FirstEnemy.transform;
-			if (FirstEnemy.GetComponent<Enemy>().speedOfEnemy > 8.0f)
+			DistanceToFirstEnemy = Vector3.Distance(transform.position, FirstEnemy.transform.position);
+			if (DistanceToFirstEnemy <= Range)
 			{
-				// FirstEnemy.GetComponent<Enemy>().speedOfEnemy = 8.0f;
+				Target = FirstEnemy.transform;
+				//if (FirstEnemy.GetComponent<Enemy>().speedOfEnemy > 9.0f)
+				//{
+				//	FirstEnemy.GetComponent<Enemy>().speedOfEnemy = 9.0f;
+				//}
 			}
-		}
-		else
-		{
-			Target = null;
-			// так как обычные пушки больше не замедля.т то в этом участке нет смылса, но на всякий случай я его оставлю
-			//if (FirstEnemy.GetComponent<Enemy>().TimeOfFreez > 0.0f)
-			//{
-			//	FirstEnemy.GetComponent<Enemy>().GetComponent<Renderer>().material.color = Old;
-			//	FirstEnemy.GetComponent<Enemy>().speedOfEnemy = 10.0f;
-			//}
+			else
+			{
+				Target = null;
+				// так как обычные пушки больше не замедля.т то в этом участке нет смылса, но на всякий случай я его оставлю
+				//if (FirstEnemy.GetComponent<Enemy>().TimeOfFreez > 0.0f)
+				//{
+				//	FirstEnemy.GetComponent<Enemy>().GetComponent<Renderer>().material.color = Old;
+				//	FirstEnemy.GetComponent<Enemy>().speedOfEnemy = 10.0f;
+				//}
+			}
 		}
 	}
 	void Update()
@@ -70,11 +74,11 @@ public class MissileScript : MonoBehaviour
 		if (TimeOfShoot <= 0.0)
 		{
 			Shooting();
-			TimeOfShoot = 3f;
+			TimeOfShoot = RateOfFire;
 		}
 		Vector3 Direction = Target.position - transform.position;
 		Quaternion lookRotation = Quaternion.LookRotation(Direction);
-		Vector3 Rotation = Quaternion.Lerp(lookRotation, PartToRotation.rotation, Time.deltaTime).eulerAngles;
+		Vector3 Rotation = Quaternion.Lerp(PartToRotation.rotation, lookRotation, Time.deltaTime * SpeedRotation).eulerAngles;
 		PartToRotation.rotation = Quaternion.Euler(0.0f, Rotation.y, 0.0f);
 	}
 	// PartToRotation.rotation

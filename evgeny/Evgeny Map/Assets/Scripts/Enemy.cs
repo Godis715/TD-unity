@@ -20,7 +20,6 @@ public class Enemy : MonoBehaviour
 	void Update()
 	{
 		Old = Color.Lerp(Color.red, Color.blue, HealthPoint / 100f);
-		// this.GetComponent<Renderer>().material.color = Old;
 		this.GetComponent<Renderer>().material.color = Color.Lerp(Color.white, Old, speedOfEnemy / 10f);
 
 		// увеличиваем TimeOfFreez из скрипта Freeze, а потом уменьшаем его в этом if.
@@ -29,18 +28,16 @@ public class Enemy : MonoBehaviour
 			if (speedOfEnemy > 0)
 			{
 				speedOfEnemy -= Time.deltaTime * 5;
-				// this.GetComponent<Renderer>().material.color = Color.Lerp(Color.white, Old, speedOfEnemy / 10f);
+				
 			}
 			TimeOfFreez -= Time.deltaTime;
 			// как только TimeOfFreez станет <= 0, то скорость восстановится и в if больше не войдет.
 			if (TimeOfFreez <= 0.0f)
 			{
 				speedOfEnemy = 10.0f;
-				// this.GetComponent<Renderer>().material.color = Old;
 			}
 		}
 
-		//
 		if (HealthPoint <= 0)
 		{
 			Destroy(gameObject);

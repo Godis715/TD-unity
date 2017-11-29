@@ -8,20 +8,22 @@ public class TurretScript : MonoBehaviour
 	public Transform Target;
 	public float Range = 12.0f;
 	public string EnemyTag = "Enemy";
+	private int SpeedRotation = 10;
 	public Transform PartToRotation;
 	public int Damage = 10;
-	GameObject TargetEnemy = null;
+	public GameObject TargetEnemy;
 	// скорострельность пушки 0.5/сек.
 	// сейчас равна 0, так как пушка по идее сразу готова стрелять.
 	private float TimeOfShoot = 0.0f;
-	Color Old = Color.blue;
+	private float RateOfFire = 0.5f;
+	private float DistanceToFirstEnemy = Mathf.Infinity;
 	void Start()
 	{
 		InvokeRepeating("UpdateTarget", 0.0f, 0.1f);
 	}
 	void UpdateTarget()
 	{
-		float DistanceToFirstEnemy = Mathf.Infinity;
+		
 		if (Target == null)
 		{
 			GameObject[] Enemies = GameObject.FindGameObjectsWithTag(EnemyTag);
@@ -43,23 +45,28 @@ public class TurretScript : MonoBehaviour
 			}
 		}
 
-		if (TargetEnemy != null && DistanceToFirstEnemy <= Range)
+
+		if (TargetEnemy != null)
 		{
-			Target = TargetEnemy.transform;
-			//if (FirstEnemy.GetComponent<Enemy>().speedOfEnemy > 9.0f)
-			//{
-			//	FirstEnemy.GetComponent<Enemy>().speedOfEnemy = 9.0f;
-			//}
-		}
-		else
-		{
-			Target = null;
-			// так как обычные пушки больше не замедля.т то в этом участке нет смылса, но на всякий случай я его оставлю
-			//if (FirstEnemy.GetComponent<Enemy>().TimeOfFreez > 0.0f)
-			//{
-			//	FirstEnemy.GetComponent<Enemy>().GetComponent<Renderer>().material.color = Old;
-			//	FirstEnemy.GetComponent<Enemy>().speedOfEnemy = 10.0f;
-			//}
+			DistanceToFirstEnemy = Vector3.Distance(transform.position, TargetEnemy.transform.position);
+			if (DistanceToFirstEnemy <= Range)
+			{
+				Target = TargetEnemy.transform;
+				//if (FirstEnemy.GetComponent<Enemy>().speedOfEnemy > 9.0f)
+				//{
+				//	FirstEnemy.GetComponent<Enemy>().speedOfEnemy = 9.0f;
+				//}
+			}
+			else
+			{
+				Target = null;
+				// так как обычные пушки больше не замедля.т то в этом участке нет смылса, но на всякий случай я его оставлю
+				//if (FirstEnemy.GetComponent<Enemy>().TimeOfFreez > 0.0f)
+				//{
+				//	FirstEnemy.GetComponent<Enemy>().GetComponent<Renderer>().material.color = Old;
+				//	FirstEnemy.GetComponent<Enemy>().speedOfEnemy = 10.0f;
+				//}
+			}
 		}
 	}
 	void Update()
@@ -72,11 +79,11 @@ public class TurretScript : MonoBehaviour
 		if (TimeOfShoot <= 0.0)
 		{
 			Shooting();
-			TimeOfShoot = 0.5f;
+			TimeOfShoot = RateOfFire;
 		}
 		Vector3 Direction = Target.position - transform.position;
 		Quaternion lookRotation = Quaternion.LookRotation(Direction);
-		Vector3 Rotation = Quaternion.Lerp(lookRotation, PartToRotation.rotation, Time.deltaTime).eulerAngles;
+		Vector3 Rotation = Quaternion.Lerp(PartToRotation.rotation, lookRotation, Time.deltaTime * SpeedRotation).eulerAngles;
 		PartToRotation.rotation = Quaternion.Euler(0.0f, Rotation.y, 0.0f);
 	}
 

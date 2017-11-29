@@ -8,11 +8,12 @@ public class FreezeScript : MonoBehaviour
 	public string EnemyTag = "Enemy";
 	// скорострельность пушки 4/сек.
 	// сейчас равна 0, так как пушка по идее сразу готова стрелять.
-	private float TimeOfShoot = 0.0f;
-	GameObject FirstEnemy = null;
+	private float RateOfFire = 4.0f;
+	private float TimeOfFreeze = 2.0f;
+	GameObject FirstEnemy;
 	void Start()
 	{
-		InvokeRepeating("UpdateTarget", 0.0f, 4.0f);
+		InvokeRepeating("UpdateTarget", 0.0f, RateOfFire);
 	}
 	void UpdateTarget()
 	{
@@ -23,7 +24,7 @@ public class FreezeScript : MonoBehaviour
 			float DistanceToEnemy = Vector3.Distance(transform.position, Enemies[i].transform.position);
 			if (Range >= DistanceToEnemy)
 			{
-				Enemies[i].GetComponent<Enemy>().TimeOfFreez = 2.0f;
+				Enemies[i].GetComponent<Enemy>().TimeOfFreez = TimeOfFreeze;
 			}
 
 		}
