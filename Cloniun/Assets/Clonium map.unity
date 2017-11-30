@@ -256,6 +256,12 @@ Prefab:
       propertyPath: Nodes.Array.data[11]
       value: 
       objectReference: {fileID: 42922639}
+    - target: {fileID: 114088259884037592, guid: 16ff4810ee5e5c34790312835835aea7,
+        type: 2}
+      propertyPath: OldBall
+      value: 
+      objectReference: {fileID: 1261458347644304, guid: aa235fefcf4b80a4288aaa8322c0a195,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 16ff4810ee5e5c34790312835835aea7, type: 2}
   m_IsPrefabParent: 0
@@ -391,6 +397,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Ball: {fileID: 1261458347644304, guid: aa235fefcf4b80a4288aaa8322c0a195, type: 2}
+  OldBall: {fileID: 1261458347644304, guid: aa235fefcf4b80a4288aaa8322c0a195, type: 2}
   Nodes:
   - {fileID: 1712382028}
   - {fileID: 379491356}
@@ -408,6 +415,11 @@ MonoBehaviour:
   - {fileID: 170013388}
   - {fileID: 1006386743}
   - {fileID: 823386345}
+  IndexStartOrder: 0
+  IndexEndOrderFirst: -1
+  IndexEndOrderSecond: -1
+  StopUpdate: 0
+  test: 0
 --- !u!4 &170013388
 Transform:
   m_ObjectHideFlags: 0

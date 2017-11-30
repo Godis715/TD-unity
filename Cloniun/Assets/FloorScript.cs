@@ -4,23 +4,32 @@ using UnityEngine;
 
 public class FloorScript : MonoBehaviour
 {
+	// 28-30
 	private int Index = 6;
 	private int Width = 4;
-	public GameObject Ball;
+	private GameObject Ball;
+	public GameObject OldBall;
 	public Transform[] Nodes;
-	private string TagSphere = "Ball";
+	private string TagBall = "Ball";
 	float CountDown = 0.0f;
-	private int[] OrderNodes = new int[64];
+	public int[] OrderNodes = new int[40];
 	public int IndexStartOrder = 0;
 	public int IndexEndOrderFirst = -1;
 	public int IndexEndOrderSecond = -1;
 	public int StopUpdate = 0;
 	public int test = 0;
+	public int test2 = 0;
 	float timeConst = 0.85f;
 	// Use this for initialization
 	// Update is called once per frame
+	void Start()
+	{
+		//Instantiate(Ball, this.transform.position, this.transform.rotation);
+		//Ball = GameObject.FindGameObjectsWithTag(TagBall);
+	}
 	void Update()
 	{
+		// if (StopUpdate == -1)
 		if (StopUpdate != 0)
 		{
 			return;
@@ -41,15 +50,18 @@ public class FloorScript : MonoBehaviour
 
 		while (IndexStartOrder <= IndexEndOrderSecond)
 		{
-			++test;
 			while (IndexStartOrder <= IndexEndOrderFirst)
 			{
 				Disclosure();
 			}
 			IndexEndOrderFirst = IndexEndOrderSecond;
-			yield return new WaitForSeconds(2.4f);
+			yield return new WaitForSeconds(1.4f);
 		}
 		IndexStartOrder = 0;
+		for (int i = 0; i < 40; ++i)
+		{
+			OrderNodes[i] = 0;
+		}
 		StopUpdate = 0;
 	}
 
@@ -57,12 +69,18 @@ public class FloorScript : MonoBehaviour
 	{
 		int TempIndex = OrderNodes[IndexStartOrder];
 		++IndexStartOrder;
-		if (TempIndex + 4 > 15)
+		if (Nodes[TempIndex].childCount < 4)
+		{
+			return;
+		}
+			if (TempIndex + 4 > 15)
 		{
 			Destroy(Nodes[TempIndex].GetChild(3).GetComponent<BAllScrit>().gameObject);
 		}
 		else
 		{
+			test2 = TempIndex;
+
 			Nodes[TempIndex].GetChild(3).GetComponent<BAllScrit>().Direction = Vector3.right;
 			Nodes[TempIndex].GetChild(3).GetComponent<BAllScrit>().TimeMove = timeConst;
 			Nodes[TempIndex].GetChild(3).SetParent(Nodes[TempIndex + 4]);
@@ -97,7 +115,7 @@ public class FloorScript : MonoBehaviour
 		{
 			Destroy(Nodes[TempIndex].GetChild(1).GetComponent<BAllScrit>().gameObject);
 		}
-		else
+		else 
 		{
 			Nodes[TempIndex].GetChild(1).GetComponent<BAllScrit>().Direction = Vector3.forward;
 			Nodes[TempIndex].GetChild(1).GetComponent<BAllScrit>().TimeMove = timeConst;
@@ -130,12 +148,13 @@ public class FloorScript : MonoBehaviour
 
 	IEnumerator CreateAndAlignment()
 	{
-		Ball = Instantiate(Ball, Nodes[Index]);
+		Ball = Instantiate(OldBall, Nodes[Index]);
 		Transform Child = Nodes[Index].GetChild(Nodes[Index].childCount - 1);
-		// Alignment(Nodes[Index].transform.position, Nodes[Index].childCount, Child);
+		Alignment(Nodes[Index]);
 		yield return new WaitForSeconds(0.3f);
 		if (Nodes[Index].childCount > 3)
 		{
+			++test;
 			StartCoroutine(Disc());
 		}
 		else
@@ -143,31 +162,34 @@ public class FloorScript : MonoBehaviour
 			StopUpdate = 0;
 		}
 	}
-	public void Alignment(Vector3 PositionParent, int IndexChild, Transform Child)
+	public void Alignment(Transform Parent)
 	{
-		Vector3 PositionBall = PositionParent;
-		if (IndexChild == 1)
+		Vector3 PositionBall = Parent.position;
+		PositionBall.y += 1f;
+		if (Parent.childCount > 0)
 		{
-			PositionBall.y += 1f;
 			PositionBall.z -= 1f;
-		}
-		if (IndexChild == 2)
-		{
-			PositionBall.y += 1f;
+			Parent.GetChild(0).position = PositionBall;
 			PositionBall.z += 1f;
 		}
-		if (IndexChild == 3)
+		if (Parent.childCount > 1)
+		{
+			PositionBall.z += 1f;
+			Parent.GetChild(1).position = PositionBall;
+			PositionBall.z -= 1f;
+		}
+		if (Parent.childCount > 2)
 		{
 			PositionBall.x -= 1f;
-			PositionBall.y += 1f;
+			Parent.GetChild(2).position = PositionBall;
+			PositionBall.x += 1f;
 		}
-		if (IndexChild == 4)
+		if (Parent.childCount > 3)
 		{
 			PositionBall.x += 1f;
-			PositionBall.y += 1f;
+			Parent.GetChild(3).position = PositionBall;
+			PositionBall.x -= 1f;
 		}
-
-		Child.position = PositionBall;
 	}
 }
 
