@@ -2,23 +2,27 @@
 
 public class Enemy : MonoBehaviour {
 
-    public float speed = 20f;
-	public float health = 100f;
+	public float defaultSpeed = 20f;
+	public float maxHealth = 100f;
+	public float health;
 
     private Transform target;
     private int wavepointIndex = 0;
 
+	private float speed = 20f;
 	private float influenceSpeed = Mathf.Infinity;
 	private float influenceDistance = 5f;
 
     void Start() {
         target = Waypoints.points[0];
+		health = maxHealth;
+		speed = defaultSpeed;
     }
 
     void Update() {
 
 		float freezerDistance = -1f;
-		speed = 20f;
+		speed = defaultSpeed;
 
 		for (int i = 0; i < Freezers.freezers.Length; i++) {
 

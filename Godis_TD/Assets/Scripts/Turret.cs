@@ -50,7 +50,7 @@ public class Turret : MonoBehaviour {
 	{
 		Debug.Log("SHOOT!");
 		GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-		bullet.GetComponent<Bullet>().enemy = nearestEnemy;
+		bullet.GetComponent<Bullet>().setEnemy(nearestEnemy);
 	}
 
 	void Update () {
