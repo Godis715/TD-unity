@@ -53,6 +53,7 @@
   <ItemGroup>
      <Compile Include="Assets\BAllScrit.cs" />
      <Compile Include="Assets\FloorScript.cs" />
+     <Compile Include="Assets\GameMaster.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Users/Евгений/Documents/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

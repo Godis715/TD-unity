@@ -5,7 +5,8 @@ using UnityEngine;
 public class FloorScript : MonoBehaviour
 {
 	// 28-30
-	private int Index = 6;
+	public int StopUpdate = 1;
+	public int Index;
 	private int Width = 4;
 	private GameObject Ball;
 	public GameObject OldBall;
@@ -16,29 +17,28 @@ public class FloorScript : MonoBehaviour
 	public int IndexStartOrder = 0;
 	public int IndexEndOrderFirst = -1;
 	public int IndexEndOrderSecond = -1;
-	public int StopUpdate = 0;
 	public int test = 0;
 	public int test2 = 0;
 	float timeConst = 0.85f;
-	// Use this for initialization
-	// Update is called once per frame
-	void Start()
-	{
-		//Instantiate(Ball, this.transform.position, this.transform.rotation);
-		//Ball = GameObject.FindGameObjectsWithTag(TagBall);
-	}
+
+
 	void Update()
 	{
-		// if (StopUpdate == -1)
 		if (StopUpdate != 0)
 		{
 			return;
 		}
-		if (Input.GetKeyDown(KeyCode.Space))
-		{
-			StopUpdate = 1;
-			StartCoroutine(CreateAndAlignment());
-		}
+		StopUpdate = 1;
+		// if (Input.GetKeyDown(KeyCode.Space))
+		//{
+			
+		StartCoroutine(CreateAndAlignment());
+		// }
+	}
+	public void Clicked(int GetIndex)
+	{
+		Index = GetIndex;
+		StartCoroutine(CreateAndAlignment());
 	}
 
 	IEnumerator Disc()
@@ -62,7 +62,7 @@ public class FloorScript : MonoBehaviour
 		{
 			OrderNodes[i] = 0;
 		}
-		StopUpdate = 0;
+		// StopUpdate = 0;
 	}
 
 	void Disclosure()
@@ -73,7 +73,12 @@ public class FloorScript : MonoBehaviour
 		{
 			return;
 		}
-			if (TempIndex + 4 > 15)
+		if (Nodes[TempIndex].childCount == 4)
+		{
+			this.transform.GetChild(TempIndex).GetComponent<Renderer>().material.color = Color.white;
+			this.transform.GetChild(TempIndex).GetComponent<GameMaster>().OldColor = Color.white;
+		}
+		if (TempIndex + 4 > 15)
 		{
 			Destroy(Nodes[TempIndex].GetChild(3).GetComponent<BAllScrit>().gameObject);
 		}
@@ -84,6 +89,8 @@ public class FloorScript : MonoBehaviour
 			Nodes[TempIndex].GetChild(3).GetComponent<BAllScrit>().Direction = Vector3.right;
 			Nodes[TempIndex].GetChild(3).GetComponent<BAllScrit>().TimeMove = timeConst;
 			Nodes[TempIndex].GetChild(3).SetParent(Nodes[TempIndex + 4]);
+			this.transform.GetChild(TempIndex + 4).GetComponent<Renderer>().material.color = Color.red;
+			this.transform.GetChild(TempIndex + 4).GetComponent<GameMaster>().OldColor = Color.red;
 			if (Nodes[TempIndex + 4].childCount > 3)
 			{
 				++IndexEndOrderSecond;
@@ -102,6 +109,8 @@ public class FloorScript : MonoBehaviour
 			Nodes[TempIndex].GetChild(2).GetComponent<BAllScrit>().Direction = Vector3.left;
 			Nodes[TempIndex].GetChild(2).GetComponent<BAllScrit>().TimeMove = timeConst;
 			Nodes[TempIndex].GetChild(2).SetParent(Nodes[TempIndex - 4]);
+			this.transform.GetChild(TempIndex - 4).GetComponent<Renderer>().material.color = Color.red;
+			this.transform.GetChild(TempIndex - 4).GetComponent<GameMaster>().OldColor = Color.red;
 			if (Nodes[TempIndex - 4].childCount > 3)
 			{
 				++IndexEndOrderSecond;
@@ -120,6 +129,8 @@ public class FloorScript : MonoBehaviour
 			Nodes[TempIndex].GetChild(1).GetComponent<BAllScrit>().Direction = Vector3.forward;
 			Nodes[TempIndex].GetChild(1).GetComponent<BAllScrit>().TimeMove = timeConst;
 			Nodes[TempIndex].GetChild(1).SetParent(Nodes[TempIndex + 1]);
+			this.transform.GetChild(TempIndex + 1).GetComponent<Renderer>().material.color = Color.red;
+			this.transform.GetChild(TempIndex + 1).GetComponent<GameMaster>().OldColor = Color.red;
 			if (Nodes[TempIndex + 1].childCount > 3)
 			{
 				++IndexEndOrderSecond;
@@ -138,6 +149,8 @@ public class FloorScript : MonoBehaviour
 			Nodes[TempIndex].GetChild(0).GetComponent<BAllScrit>().Direction = Vector3.back;
 			Nodes[TempIndex].GetChild(0).GetComponent<BAllScrit>().TimeMove = timeConst;
 			Nodes[TempIndex].GetChild(0).SetParent(Nodes[TempIndex - 1]);
+			this.transform.GetChild(TempIndex - 1).GetComponent<Renderer>().material.color = Color.red;
+			this.transform.GetChild(TempIndex - 1).GetComponent<GameMaster>().OldColor = Color.red;
 			if (Nodes[TempIndex - 1].childCount > 3)
 			{
 				++IndexEndOrderSecond;
@@ -159,7 +172,7 @@ public class FloorScript : MonoBehaviour
 		}
 		else
 		{
-			StopUpdate = 0;
+			// StopUpdate = 0;
 		}
 	}
 	public void Alignment(Transform Parent)
